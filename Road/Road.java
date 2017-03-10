@@ -7,18 +7,26 @@ public class Road {
     private int width;
     private int height;
     int numCells;
+    private int roadWidth;
 
 
-    public Road(Point centerPoint, int width, int height, int numCells) {
+    public Road(Point centerPoint, int width, int height, int numCells, int roadWidth) {
         this.centerPoint = centerPoint;
         this.width = width;
         this.height = height;
         this.numCells = numCells;
+        this.roadWidth = roadWidth;
     }
 
     public int getNumCells() {
         return numCells;
     }
+
+    public int getRoadWidth() {
+        return roadWidth;
+    }
+
+
 
     public Point getPosition(int cellId) {
         Point p = new Point();

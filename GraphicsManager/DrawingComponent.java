@@ -36,7 +36,7 @@ public class DrawingComponent  {
 
         g2d = (Graphics2D) g;
         g2d.setColor(new Color(166, 166, 166));
-        g2d.setStroke(new BasicStroke(30));
+        g2d.setStroke(new BasicStroke(vehicle.getRoad().getRoadWidth()));
 
         //draw road
         Ellipse2D rd = new Ellipse2D.Double(centerPoint.x, centerPoint.y, 400, 500);
@@ -44,7 +44,7 @@ public class DrawingComponent  {
 
         //draw car start
         g.setColor(Color.RED);
-        g.fillRect(position.x, position.y, 30, 40);
+        g.fillRect(position.x, position.y, vehicle.getVehicleWidth(), vehicle.getVehicleHeight());
 
         //draw car end
         buffer.show();

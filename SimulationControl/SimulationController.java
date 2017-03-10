@@ -23,9 +23,13 @@ public class SimulationController {
         int width = 500;
         int numCells = 6;
 
-        Road road = new Road(center, width, height, numCells);
+        int roadWidth = 30;
+        int vehicleWidth = 30;
+        int vehicleHeight = 50;
 
-        Vehicle v1 = new Vehicle(center, 0, road);
+        Road road = new Road(center, width, height, numCells, roadWidth);
+
+        Vehicle v1 = new Vehicle(center, 0, road, vehicleWidth, vehicleHeight);
         ArrayList<Vehicle> vehicles = new ArrayList();
         vehicles.add(v1);
 
