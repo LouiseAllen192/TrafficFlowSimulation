@@ -1,6 +1,7 @@
 package Vehicle;
 
 import java.awt.*;
+
 import Road.Road;
 
 public class Vehicle {
@@ -9,7 +10,6 @@ public class Vehicle {
     private Road road;
     private int vehicleWidth;
     private int vehicleHeight;
-
 
     public Vehicle(Point xy, int cellId, Road road, int vWidth, int vHeight) {
         this.position = xy;
@@ -36,9 +36,8 @@ public class Vehicle {
     }
 
     public void accelerate() {
-        incrementCellId();
-        Point newPosition = road.getPosition(cellId);
-        updatePosition(newPosition);
+        this.incrementCellId();
+        this.updatePosition(road.getPosition(cellId));
     }
 
     private void updatePosition(Point newPosition) {
@@ -47,11 +46,6 @@ public class Vehicle {
     }
 
     private void incrementCellId() {
-        if (cellId++ >= road.getNumCells()) {
-            cellId = 0;
-        } else {
-            cellId++;
-        }
-
+    	cellId = (cellId + 1) % road.getNumCells();
     }
 }

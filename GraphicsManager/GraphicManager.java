@@ -3,6 +3,7 @@ package GraphicsManager;
 import Vehicle.Vehicle;
 import java.awt.*;
 import java.util.ArrayList;
+import Road.Road;
 
 public class GraphicManager implements Runnable{
     private String title;
@@ -10,18 +11,20 @@ public class GraphicManager implements Runnable{
     private int height;
     private Point centerPoint;
     private ArrayList<Vehicle> vehicles;
+    private Road road;
     public DrawingComponent draw;
 
 
     private Thread thread;
     private Display display;
 
-    public GraphicManager(Point centerPoint, int width, int height, ArrayList<Vehicle> cars) {
+    public GraphicManager(Point centerPoint, int width, int height, ArrayList<Vehicle> cars, Road road) {
         this.width = width;
         this.height = height;
         this.title = "Traffic Flow Simulation";
         this.centerPoint = centerPoint;
         this.vehicles = cars;
+        this.road = road;
         this.draw = new DrawingComponent(centerPoint, width, height);
     }
 
@@ -38,7 +41,7 @@ public class GraphicManager implements Runnable{
             current = System.nanoTime();
             if (delta > 1) {
                 for(int i = 0; i < vehicles.size(); i++) {
-                    draw.render(vehicles.get(i), display);
+                    draw.render(display, road, vehicles);
                 }
                 delta--;
             }
