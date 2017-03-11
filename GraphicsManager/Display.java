@@ -19,15 +19,18 @@ public class Display {
 
     public void createDisplay() {
         frame = new JFrame(title);
-        frame.setSize(width, height);
+        frame.setSize(1920, 1080);
         frame.setVisible(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setMinimumSize(new Dimension(700, 800));
         frame.setLocationRelativeTo(null);
 
         canvas = new Canvas();
-        canvas.setPreferredSize(new Dimension(width, height));
+        canvas.setPreferredSize(new Dimension(1920, 1080));
         canvas.setBackground(new Color(51, 204, 51));
+
         frame.add(canvas);
         frame.pack();
+
     }
 }

@@ -25,7 +25,7 @@ public class GraphicManager implements Runnable{
         this.centerPoint = centerPoint;
         this.vehicles = cars;
         this.road = road;
-        this.draw = new DrawingComponent(centerPoint, width, height);
+        this.draw = new DrawingComponent(centerPoint, 1920, 1080);
     }
 
     public void run() {

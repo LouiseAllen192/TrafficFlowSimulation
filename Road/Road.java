@@ -60,4 +60,9 @@ public class Road {
     private double getSegmentAngle() {
         return 360 / numCells;
     }
+
+    public double getCarAngle(int cellId) {
+        //TODO: functionality to get angle car is rotated at
+        return 45;
+    }
 }

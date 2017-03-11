@@ -33,10 +33,10 @@ public class SimulationController implements Runnable {
     }
 
     public void begin() {
-
-        Point center = new Point(20, 50);
         int height = 600;
         int width = 500;
+        Point center = new Point((1920/2) - (width / 2), ((1080 /2)- (height / 2)));
+
         int numCells = 50;
 
         int roadWidth = 30;
@@ -45,9 +45,11 @@ public class SimulationController implements Runnable {
 
         Road road = new Road(center, width, height, numCells, roadWidth);
 
-        Vehicle v1 = new Vehicle(new Point(0,0), 0, road, vehicleWidth, vehicleHeight);
+        Vehicle v1 = new Vehicle(new Point(0,0), 0, road, vehicleWidth, vehicleHeight, Color.BLUE);
+        Vehicle v2 = new Vehicle(new Point(20,0), 4, road, vehicleWidth, vehicleHeight, Color.RED);
         vehicles = new ArrayList<>();
         vehicles.add(v1);
+        vehicles.add(v2);
 
         (new Thread(this)).start();
 
