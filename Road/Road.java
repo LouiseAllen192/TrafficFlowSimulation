@@ -44,7 +44,6 @@ public class Road {
 
     public Point getPosition(int cellId) {
         Point p = new Point();
-
         double angle = getAngle(cellId);
         
         p.x = (int)((centerPoint.x + (this.getWidth() / 2)) + ((this.getWidth() / 2)  * Math.cos(Math.toRadians(angle))) + 0.5);

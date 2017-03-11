@@ -12,15 +12,16 @@ public class Vehicle {
     private int vehicleWidth;
     private int vehicleHeight;
     private Color color;
+    private String vehicleImagePath;
 
-    public Vehicle(Point xy, int cellId, Road road, int vWidth, int vHeight, Color color) {
+    public Vehicle(Point xy, int cellId, Road road, int vWidth, int vHeight, String imagePath) {
         this.position = xy;
         this.cellId = cellId;
         this.road = road;
         this.vehicleWidth = vWidth;
         this.vehicleHeight = vHeight;
         this.angle = 0.0;
-        this.color = color;
+        this.vehicleImagePath = imagePath;
     }
 
     public Point getPosition() {
@@ -39,12 +40,12 @@ public class Vehicle {
         return angle;
     }
 
-    public Road getRoad() {
-        return road;
+    public String getVehicleImagePath() {
+        return vehicleImagePath;
     }
 
-    public Color getColor() {
-        return color;
+    public Road getRoad() {
+        return road;
     }
 
     public void accelerate() {
@@ -56,12 +57,10 @@ public class Vehicle {
     private void updatePosition(Point newPosition) {
         this.position.x = newPosition.x;
         this.position.y = newPosition.y;
-        System.out.println(color.toString() + " : " + position.x + "," + position.y);
     }
 
     private void incrementCellId() {
     	cellId = (cellId + 1) % road.getNumCells();
-    	System.out.println(cellId);
     }
 
     private void updateAngle(double angle) {
