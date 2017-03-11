@@ -66,7 +66,6 @@ public class DrawingComponent  {
         at.translate(pos.x, pos.y);
         g2d.setTransform(at);
         g2d.fill(rectangle);
-        g2d.dispose();
     }
 
 

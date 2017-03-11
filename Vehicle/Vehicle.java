@@ -56,10 +56,12 @@ public class Vehicle {
     private void updatePosition(Point newPosition) {
         this.position.x = newPosition.x;
         this.position.y = newPosition.y;
+        System.out.println(color.toString() + " : " + position.x + "," + position.y);
     }
 
     private void incrementCellId() {
     	cellId = (cellId + 1) % road.getNumCells();
+    	System.out.println(cellId);
     }
 
     private void updateAngle(double angle) {
