@@ -2,63 +2,52 @@ package SimulationControl;
 
 
 import GraphicsManager.GraphicManager;
+import Driver.Driver;
 import Vehicle.Vehicle;
 import Road.Road;
+import SensoryPerception.Hearing;
+import SensoryPerception.Sight;
 
 import java.awt.*;
 import java.util.ArrayList;
 
-public class SimulationController implements Runnable {
+public class SimulationController {
 
 
-    private ArrayList<Vehicle> vehicles;
+    private ArrayList<Driver> drivers;
+    private final int agressive_drivers = 1;
+    private double screen_width, screen_height;
+    private Point center;
+    private GraphicManager graphics_manager;
+    private Road road;
 
     public SimulationController() {
-
+    	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    	
+    	this.drivers = new ArrayList<>();
+    	this.screen_width = screenSize.getWidth() / 2;
+    	this.screen_height = screenSize.getHeight() / 2;
+    	this.center = new Point((int)(this.screen_width / 2), (int)(this.screen_height / 2));
+    	this.road = new Road(this.center, (int)this.screen_width, (int)this.screen_height);
+    	
+    	// this.graphics_manager = new GraphicManager();
+    	
+    	/*
+    	for (int i = 0; i < agressive_drivers; i++) {
+    		Vehicle v = new Vehicle();
+    		drivers.add(new Driver(v, "Russell", 20, "Male"));
+    	}
+    	*/
+    	
     }
-
-    public void run() {
-    	final long NANOSEC_PER_SEC = 1000l*1000*1000;
-
-        long startTime = System.nanoTime();
-        long currentTime;
-        while ((currentTime = System.nanoTime()) > 0){
-          if ((currentTime - startTime) > (NANOSEC_PER_SEC / 16)) {
-            startTime = currentTime;
-            for (int i = 0; i < vehicles.size(); i++) {
-                vehicles.get(i).accelerate();
-            }
-        }
-      }
-    }
-
+    
     public void begin() {
-        int height = 600;
-        int width = 500;
-        Point center = new Point((1920/2) - (width / 2), ((1080 /2)- (height / 2)));
-
-        int numCells = 200;
-
-        int roadWidth = 30;
-        int vehicleWidth = 30;
-        int vehicleHeight = 50;
-
-        Road road = new Road(center, width, height, numCells, roadWidth);
-
-        Vehicle v1 = new Vehicle(new Point(0,0), 0, road, vehicleWidth, vehicleHeight, "pink-sports-car.png");
-        Vehicle v2 = new Vehicle(new Point(20,0), 4, road, vehicleWidth, vehicleHeight, "red-sports-car.png");
-        Vehicle v3 = new Vehicle(new Point(20,0), 20, road, vehicleWidth, vehicleHeight, "green-sports-car.png");
-        Vehicle v4 = new Vehicle(new Point(20,0), 30, road, vehicleWidth, vehicleHeight, "purple-sports-car.png");
-        vehicles = new ArrayList<>();
-        vehicles.add(v1);
-        //vehicles.add(v2);
-        //vehicles.add(v3);
-        //vehicles.add(v4);
-
-        (new Thread(this)).start();
-
-        GraphicManager gm = new GraphicManager(center, width, height, vehicles, road);
-        gm.run();
-
+    	// Start the drivers driving
+    	for (Driver d : drivers) {
+    		// new Thread(d).start();
+    	}
+    	
+    	// Start showing them on screen
+    	graphics_manager.run();
     }
 }

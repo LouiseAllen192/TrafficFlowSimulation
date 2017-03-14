@@ -1,29 +1,34 @@
 package Road;
 
 import java.awt.*;
+import java.util.*;
 
 public class Road {
-    private Point centerPoint;
+	
+    private Point center;
     private int width;
     private int height;
-    int numCells;
-    private int roadWidth;
+    private int cell_count;
+    private int road_width;
+    private double angle_per_cell;
+    private HashMap<Integer, Point> coordinates;
 
-
-    public Road(Point centerPoint, int width, int height, int numCells, int roadWidth) {
-        this.centerPoint = centerPoint;
+    public Road(Point center, int width, int height) {
+        this.center = center;
         this.width = width;
         this.height = height;
-        this.numCells = numCells;
-        this.roadWidth = roadWidth;
+        this.cell_count = 1000;
+        this.road_width = 5;
+        this.angle_per_cell = 360 / this.cell_count;
+        this.coordinates = new HashMap<>();
     }
     
     public int getX() {
-    	return this.centerPoint.x;
+    	return this.center.x;
     }
     
     public int getY() {
-    	return this.centerPoint.y;
+    	return this.center.y;
     }
     
     public int getWidth() {
@@ -35,29 +40,31 @@ public class Road {
     }
 
     public int getNumCells() {
-        return numCells;
+        return this.cell_count;
     }
 
     public int getRoadWidth() {
-        return roadWidth;
+        return this.road_width;
     }
 
-    public Point getPosition(int cellId) {
+    public Point getPosition(int cell_index) {
+       	if (this.coordinates.containsKey(cell_index)) {
+    		return this.coordinates.get(cell_index);
+    	}
+    	
         Point p = new Point();
-        double angle = getAngle(cellId);
+        double angle = this.getAngle(cell_index);
         
-        p.x = (int)((centerPoint.x + (this.getWidth() / 2)) + ((this.getWidth() / 2)  * Math.cos(Math.toRadians(angle))) + 0.5);
-        p.y = (int)((centerPoint.y + (this.getHeight() / 2)) + ((this.getHeight() / 2) * Math.sin(Math.toRadians(angle))) + 0.5);
+        p.x = (int)((this.center.x + (this.getWidth() / 2)) + ((this.getWidth() / 2)  * Math.cos(Math.toRadians(angle))) + 0.5);
+        p.y = (int)((this.center.y + (this.getHeight() / 2)) + ((this.getHeight() / 2) * Math.sin(Math.toRadians(angle))) + 0.5);
+        
+        this.coordinates.put(cell_index, p);
         
         return p;
     }
 
-    private double getAngle(int cellIndex) {
-        return getSegmentAngle() * (cellIndex % numCells);
-    }
-
-    private double getSegmentAngle() {
-        return 360 / numCells;
+    private double getAngle(int cell_index) {
+        return this.angle_per_cell * (cell_index % this.cell_count);
     }
 
     public double getCarAngle(int cellId) {
