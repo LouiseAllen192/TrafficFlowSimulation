@@ -6,7 +6,7 @@ import SensoryPerception.Hearing;
 import SensoryPerception.Sight;
 import Vehicle.Vehicle;
 
-public class AggressiveDriver extends Driver implements Runnable{
+public class AggressiveDriver extends Driver{
 	
 	private int speedModifier = 5;
 	
