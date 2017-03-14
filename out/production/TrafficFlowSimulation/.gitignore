@@ -37,3 +37,12 @@ hs_err_pid*
 # Maven
 log/
 target/
+/grass.png
+/green-sports-car.png
+/pink-sports-car.png
+/purple-sports-car.png
+/out/
+/Driver/
+/GraphicsManager/
+/SimulationControl/
+/Vehicle/
