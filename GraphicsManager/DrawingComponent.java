@@ -81,7 +81,7 @@ public class DrawingComponent  {
 
         AffineTransform at = new AffineTransform();
         at.setToRotation(v.getAngle(), pos.x + (v.getVehicleWidth() / 2), pos.y + (v.getVehicleHeight() / 2));
-        at.translate(pos.x, pos.y);
+        at.translate(pos.x - (v.getVehicleWidth() / 2), pos.y - (v.getVehicleHeight() / 2));
         System.out.println("x: "+pos.x+" y: "+pos.y+" current cell: "+v.getCurrentCell());
         g2d.drawImage(carImage, at, null);
     }

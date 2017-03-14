@@ -18,7 +18,7 @@ public class Road {
         this.width = width;
         this.height = height;
         this.cell_count = 1000;
-        this.road_width = 5;
+        this.road_width = 40;
         this.angle_per_cell = 0.36;//360 / this.cell_count;
         this.coordinates = new HashMap<>();
     }
@@ -70,6 +70,6 @@ public class Road {
 
     public double getCarAngle(int cellId) {
         //TODO: functionality to get angle car is rotated at
-        return 45;
+        return 0;
     }
 }
