@@ -2,7 +2,7 @@ package SimulationControl;
 
 
 import GraphicsManager.GraphicManager;
-import Driver.Driver;
+import Driver.*;
 import Vehicle.Vehicle;
 import Road.Road;
 import SensoryPerception.Hearing;
@@ -12,7 +12,6 @@ import java.awt.*;
 import java.util.ArrayList;
 
 public class SimulationController {
-
 
     private ArrayList<Driver> drivers;
     private final int agressive_drivers = 1;
@@ -30,7 +29,13 @@ public class SimulationController {
     	this.center = new Point((int)(this.screen_width / 2), (int)(this.screen_height / 2));
     	this.road = new Road(this.center, (int)this.screen_width, (int)this.screen_height);
     	
-    	// this.graphics_manager = new GraphicManager();
+    	AggressiveDriver d1 = new AggressiveDriver(new Vehicle(new Point(0,0), 0, this.road, 30, 50, "pink-sports-car.png"), "Rob", 20, "Male");
+    	NormalDriver d2 = new NormalDriver(new Vehicle(new Point(30,0), 0, this.road, 30, 50, "green-sports-car.png"), "Louise", 26, "Female");
+    	
+    	drivers.add(d1);       
+    	drivers.add(d2);
+    	
+    	this.graphics_manager = new GraphicManager(this.center, 1000, 600, drivers, this.road);
     	
     	/*
     	for (int i = 0; i < agressive_drivers; i++) {
@@ -44,7 +49,8 @@ public class SimulationController {
     public void begin() {
     	// Start the drivers driving
     	for (Driver d : drivers) {
-    		// new Thread(d).start();
+    		new Thread(d).start();
+    		System.out.println("loop");
     	}
     	
     	// Start showing them on screen

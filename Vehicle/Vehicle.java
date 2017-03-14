@@ -32,12 +32,24 @@ public class Vehicle {
         this.currentSpeed = 0.0;
 	}
 	
+	public Vehicle(Point xy,int cellId, Road road, int vWidth, int vHeight, String imagePath){
+		 this.position = xy;
+		 this.currentCell = cellId;
+		 this.track = road;
+		 this.vehicleWidth = vWidth;
+		 this.vehicleHeight = vHeight;
+		 this.color = Color.gray;
+		 this.imagePath = imagePath;
+		 this.currentSpeed = 0.0;
+	 }
+	
 	public void setCurrentSpeed(double currentSpeed){
 		this.currentSpeed = currentSpeed;
 	}
 	
-	public void accelerate(){
-		this.incrementCellId();
+	public void accelerate(int speedModifier){
+		//System.out.println("acc");
+		this.incrementCellId(speedModifier);
 		this.updatePosition(track.getPosition(this.currentCell));
 		this.updateAngle(track.getCarAngle(this.currentCell));
 	}
@@ -48,8 +60,8 @@ public class Vehicle {
 		this.updateAngle(track.getCarAngle(this.currentCell));
 	}
 	
-	public void incrementCellId(){
-		this.currentCell = (this.currentCell + 1) % track.getNumCells();
+	public void incrementCellId(int speedModifier){
+		this.currentCell = (this.currentCell + speedModifier) % track.getNumCells();
 	}
 	
 	public void decrementCellId(){
@@ -99,6 +111,10 @@ public class Vehicle {
 	
 	public double getCurrentSpeed() {
 		return currentSpeed;
+	}
+	
+	public void setColor(Color color){
+		this.color = color;
 	}
 }
 

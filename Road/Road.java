@@ -19,7 +19,7 @@ public class Road {
         this.height = height;
         this.cell_count = 1000;
         this.road_width = 5;
-        this.angle_per_cell = 360 / this.cell_count;
+        this.angle_per_cell = 0.36;//360 / this.cell_count;
         this.coordinates = new HashMap<>();
     }
     
@@ -48,22 +48,23 @@ public class Road {
     }
 
     public Point getPosition(int cell_index) {
-       	if (this.coordinates.containsKey(cell_index)) {
-    		return this.coordinates.get(cell_index);
-    	}
+       	//if (this.coordinates.containsKey(cell_index)) {
+    		//return this.coordinates.get(cell_index);
+    	//}
     	
         Point p = new Point();
         double angle = this.getAngle(cell_index);
-        
+        System.out.println(angle);
         p.x = (int)((this.center.x + (this.getWidth() / 2)) + ((this.getWidth() / 2)  * Math.cos(Math.toRadians(angle))) + 0.5);
         p.y = (int)((this.center.y + (this.getHeight() / 2)) + ((this.getHeight() / 2) * Math.sin(Math.toRadians(angle))) + 0.5);
         
-        this.coordinates.put(cell_index, p);
+        //this.coordinates.put(cell_index, p);
         
         return p;
     }
 
     private double getAngle(int cell_index) {
+    	System.out.println(this.angle_per_cell);
         return this.angle_per_cell * (cell_index % this.cell_count);
     }
 

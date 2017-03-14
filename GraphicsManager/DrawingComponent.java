@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import Vehicle.Vehicle;
 import Road.Road;
+import Driver.Driver;
 
 import javax.imageio.ImageIO;
 
@@ -31,7 +32,7 @@ public class DrawingComponent  {
         this.centerPoint = centerPoint;
     }
 
-    public void render(Display display, Road road, ArrayList<Vehicle> vehicles) {
+    public void render(Display display, Road road, ArrayList<Driver> drivers) {
     	buffer = display.canvas.getBufferStrategy();
     	if (buffer == null) {
     		display.canvas.createBufferStrategy(3);
@@ -58,8 +59,8 @@ public class DrawingComponent  {
     	
     	g2d.draw(new Ellipse2D.Double(road.getX(), road.getY(), road.getWidth(), road.getHeight()));
 
-    	for (Vehicle v : vehicles) {
-            drawVehicle(v);
+    	for (Driver d : drivers) {
+            drawVehicle(d.getDriverVehicle());
     	}
     	
     	buffer.show();
@@ -67,6 +68,7 @@ public class DrawingComponent  {
     }
 
     private void drawVehicle(Vehicle v) {
+    	//System.out.println("draw vehicle");
         BufferedImage carImage = null;
         try {
             carImage = ImageIO.read(new File(v.getVehicleImagePath()));
@@ -80,7 +82,7 @@ public class DrawingComponent  {
         AffineTransform at = new AffineTransform();
         at.setToRotation(v.getAngle(), pos.x + (v.getVehicleWidth() / 2), pos.y + (v.getVehicleHeight() / 2));
         at.translate(pos.x, pos.y);
-
+        System.out.println("x: "+pos.x+" y: "+pos.y+" current cell: "+v.getCurrentCell());
         g2d.drawImage(carImage, at, null);
     }
 
