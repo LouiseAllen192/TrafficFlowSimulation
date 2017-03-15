@@ -1,11 +1,7 @@
 package GraphicsManager;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 
 public class Display implements IDisplay {
     private String title;
@@ -38,7 +34,6 @@ public class Display implements IDisplay {
 
         canvas = new Canvas();
         canvas.setPreferredSize(new Dimension(this.screenWidth, this.screenHeight));
-        //canvas.setBackground(new Color(51, 204, 51));
 
         frame.add(canvas);
         frame.pack();
