@@ -31,6 +31,15 @@ public class GraphicManager implements Runnable{
     public void run() {
         init();
 
+        while(true) {
+        	try{
+        		draw.render(display);
+        		Thread.sleep(33);
+        	} catch(InterruptedException ex) {
+        		
+        	}
+        }
+        /*
         int fps = 40;
         double timePerTick = 1000000000/fps;
         double delta = 0;
@@ -40,12 +49,11 @@ public class GraphicManager implements Runnable{
             delta = delta + (System.nanoTime() - current) / timePerTick;
             current = System.nanoTime();
             if (delta > 1) {
-                for(int i = 0; i < drivers.size(); i++) {
-                    draw.render(display);
-                }
+                draw.render(display);
                 delta--;
             }
         }
+        */
     }
     
 

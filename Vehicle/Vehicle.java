@@ -17,10 +17,6 @@ public class Vehicle {
 	private Point position;
 	private Color color;
 	private String imagePath;
-
-	public Vehicle(){
-		
-	}
 	
 	public Vehicle(Point xy,int cellId, Road road, int vWidth, int vHeight, Color color){
 		this.position = xy;

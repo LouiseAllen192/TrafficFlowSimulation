@@ -1,5 +1,7 @@
 package Driver;
 
+import org.omg.PortableInterceptor.TRANSPORT_RETRY;
+
 import SensoryPerception.Hearing;
 import SensoryPerception.Sight;
 import Vehicle.Vehicle;
@@ -97,34 +99,20 @@ public class Driver implements Runnable {
 	}
 
 	public void stop() {
-		// driverVehicle.setCurrentSpeed(0);
+		
 	}
 
 	public void drive() {
-		// Is drive going to be continuously called or a constantly looping
-		// while-loop?
-		/*
-		 * boolean vehicleAhead = driverSight.lookForVehicles();
-		 * if(vehicleAhead) driverVehicle.decellerate(); else
-		 * driverVehicle.accellerate();
-		 * 
-		 * driverVehicle.updateCurrentCell(); //is this called from here or
-		 * accelerate/decellerate?
-		 * 
-		 * graphics.updaatePosition(driverVehicle);
-		 */
 		
 	}
 
 	public void run() {
-		final long NANOSEC_PER_SEC = 1000l * 1000 * 1000;
-
-		long startTime = System.nanoTime();
-		long currentTime;
-		while ((currentTime = System.nanoTime()) > 0) {
-			if ((currentTime - startTime) > (NANOSEC_PER_SEC / 16)) {
-				startTime = currentTime;
-				this.drive();
+		while(true) {
+			this.drive();
+			try {
+				Thread.sleep(33);
+			} catch(InterruptedException ex) {
+				
 			}
 		}
 	}
