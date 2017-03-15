@@ -3,7 +3,6 @@ package GraphicsManager;
 import java.awt.*;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -14,52 +13,35 @@ import Driver.Driver;
 
 import javax.imageio.ImageIO;
 
-public class DrawingComponent  {
+public class DrawingComponent implements IDrawingComponent{
 
-    private String title;
     private int width;
     private int height;
-    private Point centerPoint;
-    private Graphics g;
     private Graphics2D g2d;
     private BufferStrategy buffer;
+    private Road road;
+    private ArrayList<Driver> drivers;
+    private final String GRASS_IMAGE_PATH;
 
 
-    public DrawingComponent(Point centerPoint, int width, int height) {
-        this.title = "Traffic Flow simulation";
-        this.width = width;
-        this.height = height;
-        this.centerPoint = centerPoint;
+    public DrawingComponent(double width, double height, Road road, ArrayList<Driver> drivers) {
+        this.width = (int) width;
+        this.height = (int) height;
+        this.road = road;
+        this.drivers = drivers;
+        this.GRASS_IMAGE_PATH = "grass.png";
     }
 
-    public void render(Display display, Road road, ArrayList<Driver> drivers) {
-    	buffer = display.canvas.getBufferStrategy();
-    	if (buffer == null) {
-    		display.canvas.createBufferStrategy(3);
-    		buffer = display.canvas.getBufferStrategy();
-    	}
-    	
-    	g = buffer.getDrawGraphics();
-        g2d = (Graphics2D) g;
+    public void render(IDisplay display) {
+    	setBuffer(display);
+
+        g2d = (Graphics2D) buffer.getDrawGraphics();
     	g2d.clearRect(0, 0, width, height);
 
-        BufferedImage myImage = null;
-        BufferedImage carImage = null;
-        try {
-            myImage = ImageIO.read(new File("grass.png"));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        ImagePanel panel = new ImagePanel(myImage);
-        panel.paintComponent(g2d);
-    	
+        paintGrassBackgroundImage();
+        drawRoad();
 
-    	g2d.setColor(new Color(77, 77, 77));
-    	g2d.setStroke(new BasicStroke(road.getRoadWidth()));
-    	
-    	g2d.draw(new Ellipse2D.Double(road.getX(), road.getY(), road.getWidth(), road.getHeight()));
-
-    	for (Driver d : drivers) {
+    	for (Driver d : this.drivers) {
             drawVehicle(d.getDriverVehicle());
     	}
     	
@@ -67,33 +49,60 @@ public class DrawingComponent  {
     	g2d.dispose();
     }
 
+    private void setBuffer(IDisplay display) {
+        buffer = display.getCanvas().getBufferStrategy();
+        if (buffer == null) {
+            display.getCanvas().createBufferStrategy(3);
+            buffer = display.getCanvas().getBufferStrategy();
+        }
+    }
+
+    private void paintGrassBackgroundImage() {
+        BufferedImage myImage = null;
+        try {
+            myImage = ImageIO.read(new File(GRASS_IMAGE_PATH));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        ImagePanel panel = new ImagePanel(myImage);
+        panel.paintComponent(g2d);
+    }
+
+    private void drawRoad() {
+        g2d.setColor(this.road.getRoadColor());
+        g2d.setStroke(new BasicStroke(this.road.getRoadWidth()));
+        g2d.draw(new Ellipse2D.Double(this.road.getX(), this.road.getY(), this.road.getWidth(), this.road.getHeight()));
+    }
+
     private void drawVehicle(Vehicle v) {
-    	//System.out.println("draw vehicle");
+        BufferedImage carImage = resize(getCarImage(v), v.getVehicleHeight(), v.getVehicleWidth());
+        Point pos = v.getPosition();
+
+        AffineTransform at = new AffineTransform();
+        at.setToRotation(v.getAngle(), pos.x + (v.getVehicleWidth() / 2), pos.y + (v.getVehicleHeight() / 2));
+        at.translate(pos.x - (v.getVehicleWidth() / 2), pos.y - (v.getVehicleHeight() / 2));
+
+        g2d.drawImage(carImage, at, null);
+    }
+
+    private BufferedImage getCarImage(Vehicle v) {
         BufferedImage carImage = null;
         try {
             carImage = ImageIO.read(new File(v.getVehicleImagePath()));
         } catch (Exception e) {
             e.printStackTrace();
         }
-        carImage = resize(carImage, v.getVehicleHeight(), v.getVehicleWidth());
-
-        Point pos = v.getPosition();
-
-        AffineTransform at = new AffineTransform();
-        at.setToRotation(v.getAngle(), pos.x + (v.getVehicleWidth() / 2), pos.y + (v.getVehicleHeight() / 2));
-        at.translate(pos.x - (v.getVehicleWidth() / 2), pos.y - (v.getVehicleHeight() / 2));
-        System.out.println("x: "+pos.x+" y: "+pos.y+" current cell: "+v.getCurrentCell());
-        g2d.drawImage(carImage, at, null);
+        return carImage;
     }
 
-    public static BufferedImage resize(BufferedImage img, int newW, int newH) {
+    private BufferedImage resize(BufferedImage img, int newW, int newH) {
         Image tmp = img.getScaledInstance(newW, newH, Image.SCALE_SMOOTH);
-        BufferedImage dimg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
+        BufferedImage dImg = new BufferedImage(newW, newH, BufferedImage.TYPE_INT_ARGB);
 
-        Graphics2D g2d = dimg.createGraphics();
+        Graphics2D g2d = dImg.createGraphics();
         g2d.drawImage(tmp, 0, 0, null);
         g2d.dispose();
 
-        return dimg;
+        return dImg;
     }
 }

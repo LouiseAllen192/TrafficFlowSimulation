@@ -6,26 +6,26 @@ import Road.Road;
 import Driver.*;
 
 public class GraphicManager implements Runnable{
+
     private String title;
-    private int width;
-    private int height;
-    private Point centerPoint;
-    private Road road;
+    private int width, height;
+    private double screenWidth, screenHeight;
     public DrawingComponent draw;
     private ArrayList<Driver> drivers;
 
-
     private Thread thread;
-    private Display display;
+    private IDisplay display;
 
-    public GraphicManager(Point centerPoint, int width, int height, ArrayList<Driver> drivers, Road road) {
+    public GraphicManager(Point centerPoint, int width, int height, double screenWidth, double screenHeight, ArrayList<Driver> drivers, Road road) {
         this.width = width;
         this.height = height;
         this.title = "Traffic Flow Simulation";
-        this.centerPoint = centerPoint;
+        //this.centerPoint = centerPoint;
         this.drivers = drivers;
-        this.road = road;
-        this.draw = new DrawingComponent(centerPoint, 1920, 1080);
+        //this.road = road;
+        this.draw = new DrawingComponent(screenHeight, screenWidth, road, drivers);
+        this.screenWidth = screenWidth;
+        this.screenHeight = screenHeight;
     }
 
     public void run() {
@@ -41,7 +41,7 @@ public class GraphicManager implements Runnable{
             current = System.nanoTime();
             if (delta > 1) {
                 for(int i = 0; i < drivers.size(); i++) {
-                    draw.render(display, road, drivers);
+                    draw.render(display);
                 }
                 delta--;
             }
@@ -50,7 +50,8 @@ public class GraphicManager implements Runnable{
     
 
     public void init() {
-        display = new Display(title, width, height);
+        display = new Display(title, width, height, screenWidth, screenHeight);
+        display.createDisplay();
     }
 
     public synchronized void start() {

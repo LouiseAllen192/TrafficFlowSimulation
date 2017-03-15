@@ -35,7 +35,7 @@ public class SimulationController {
     	drivers.add(d1);       
     	drivers.add(d2);
     	
-    	this.graphics_manager = new GraphicManager(this.center, 1000, 600, drivers, this.road);
+    	this.graphics_manager = new GraphicManager(this.center, 1000, 600,  this.screen_width, this.screen_height ,drivers, this.road);
     	
     	/*
     	for (int i = 0; i < agressive_drivers; i++) {

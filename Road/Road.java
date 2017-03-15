@@ -12,6 +12,7 @@ public class Road {
     private int road_width;
     private double angle_per_cell;
     private HashMap<Integer, Point> coordinates;
+    private final Color ROAD_COLOR;
 
     public Road(Point center, int width, int height) {
         this.center = center;
@@ -21,6 +22,7 @@ public class Road {
         this.road_width = 40;
         this.angle_per_cell = 0.36;//360 / this.cell_count;
         this.coordinates = new HashMap<>();
+        this.ROAD_COLOR = new Color(77, 77, 77);
     }
     
     public int getX() {
@@ -41,6 +43,10 @@ public class Road {
 
     public int getNumCells() {
         return this.cell_count;
+    }
+
+    public Color getRoadColor() {
+        return ROAD_COLOR;
     }
 
     public int getRoadWidth() {
