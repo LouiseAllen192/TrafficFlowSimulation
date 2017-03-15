@@ -39,21 +39,6 @@ public class GraphicManager implements Runnable{
         		
         	}
         }
-        /*
-        int fps = 40;
-        double timePerTick = 1000000000/fps;
-        double delta = 0;
-        long current = System.nanoTime();
-
-        while (true) {
-            delta = delta + (System.nanoTime() - current) / timePerTick;
-            current = System.nanoTime();
-            if (delta > 1) {
-                draw.render(display);
-                delta--;
-            }
-        }
-        */
     }
     
 

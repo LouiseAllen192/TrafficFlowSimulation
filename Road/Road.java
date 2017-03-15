@@ -19,7 +19,7 @@ public class Road {
         this.width = width;
         this.height = height;
         this.cell_count = 1000;
-        this.road_width = 40;
+        this.road_width = 50;
         this.angle_per_cell = 360.0 / this.cell_count;
         this.coordinates = new HashMap<>();
         this.ROAD_COLOR = new Color(77, 77, 77);
@@ -61,15 +61,8 @@ public class Road {
         Point p = new Point();
         double angle = this.getAngle(cell_index);
         
-        if ((cell_index % this.cell_count) < this.cell_count / 2) {
-        	p.x = (int)(((this.center.x / 2) + (this.getWidth() / 2)) + ((this.getWidth() / 2)  * Math.cos(Math.toRadians(angle))));
-        	p.y = (int)(((this.center.y / 2) + (this.getHeight() / 2)) + ((this.getHeight() / 2) * Math.sin(Math.toRadians(angle))));
-        	p.y = (int)(p.y + 1);
-        } else {
-        	p.x = (int)(((this.center.x / 2) + (this.getWidth() / 2)) + ((this.getWidth() / 2)  * Math.cos(Math.toRadians(angle))));
-        	p.y = (int)(((this.center.y / 2) + (this.getHeight() / 2)) + ((this.getHeight() / 2) * Math.sin(Math.toRadians(angle))));
-        	p.y = (int)(p.y - 1);
-        }
+        p.x = (int)(((this.center.x / 2) + (this.getWidth() / 2)) + ((this.getWidth() / 2)  * Math.cos(Math.toRadians(angle))));
+        p.y = (int)(((this.center.y / 2) + (this.getHeight() / 2)) + ((this.getHeight() / 2) * Math.sin(Math.toRadians(angle))));
         //this.coordinates.put(cell_index, p);
         
         return p;
@@ -82,8 +75,5 @@ public class Road {
     public double getCarAngle(int cell_index) {
         //TODO: functionality to get angle car is rotated at
     	return Math.toRadians(this.angle_per_cell * (cell_index % this.cell_count)) - 1.5708;
-    	// return 1.5708;
-    	// return ((360.0 / this.cell_count) * cell_index) / 80;
-    	// return (this.angle_per_cell * (cell_index % this.cell_count));
     }
 }

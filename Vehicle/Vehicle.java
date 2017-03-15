@@ -68,9 +68,23 @@ public class Vehicle {
 		this.angle = angle;
 	}
 
-	public void updatePosition(Point position){
+	public void updatePosition(Point position) {
+		
 		this.position.x = position.x;
 		this.position.y = position.y;
+		/*
+		if (this.currentCell > 400 && this.currentCell < 600) {
+			this.position.x = position.x - this.vehicleWidth;
+		} else {
+			this.position.x = position.x;
+		}
+		
+		if (this.currentCell < track.getNumCells() / 2) {
+			this.position.y = position.y;
+		} else {
+			this.position.y = position.y - this.vehicleHeight;
+		}
+		*/
 	}
 	
 	public Point getPosition(){

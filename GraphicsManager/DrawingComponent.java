@@ -77,10 +77,11 @@ public class DrawingComponent implements IDrawingComponent{
     private void drawVehicle(Vehicle v) {
         BufferedImage carImage = resize(getCarImage(v), v.getVehicleHeight(), v.getVehicleWidth());
         Point pos = v.getPosition();
+        Point p2 = new Point(pos.x - (v.getVehicleWidth() / 2), pos.y - (v.getVehicleHeight() / 2));
 
         AffineTransform at = new AffineTransform();
-        at.setToRotation(v.getAngle(), pos.x + (v.getVehicleWidth() / 2), pos.y + (v.getVehicleHeight() / 2));
-        at.translate(pos.x - (v.getVehicleWidth() / 2), pos.y - (v.getVehicleHeight() / 2));
+        at.rotate(v.getAngle(), p2.x + (v.getVehicleWidth() / 2), p2.y + (v.getVehicleHeight() / 2));
+        at.translate(p2.x, p2.y);
 
         g2d.drawImage(carImage, at, null);
     }
