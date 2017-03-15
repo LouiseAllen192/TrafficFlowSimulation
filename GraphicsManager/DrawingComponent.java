@@ -25,6 +25,7 @@ public class DrawingComponent implements IDrawingComponent{
 
 
     public DrawingComponent(double screenWidth, double screenHeight, Road road, ArrayList<Driver> drivers) {
+    	System.out.printf("Width - %.2f, Height - %.2f\n", screenWidth, screenHeight);
         this.screenWidth = (int) screenWidth;
         this.screenHeight = (int) screenHeight;
         this.road = road;

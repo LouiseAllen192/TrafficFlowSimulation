@@ -27,7 +27,7 @@ public class GraphicManager implements Runnable{
         while(true) {
         	try{
         		draw.render(display);
-        		Thread.sleep(33);
+        		Thread.sleep(16);
         	} catch(InterruptedException ex) {
         		ex.printStackTrace();
         	}
