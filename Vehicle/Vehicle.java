@@ -2,10 +2,14 @@ package Vehicle;
 
 import java.awt.Color;
 import java.awt.Point;
+
+import CollisionDetection.CollisionDetection;
+import CollisionDetection.CollisionDetectionSubject;
+import Driver.DriverCollisionObserver;
 import Road.Road;
 
 
-public class Vehicle {
+public class Vehicle implements DriverCollisionObserver{
 	
 	private int currentCell,vehicleWidth,vehicleHeight;
 	public static enum manufacturer{
@@ -17,8 +21,10 @@ public class Vehicle {
 	private Point position;
 	private Color color;
 	private String imagePath;
+	private int vehicleId;
+	private boolean isCrashed;
 	
-	public Vehicle(Point xy,int cellId, Road road, int vWidth, int vHeight, Color color){
+	public Vehicle(Point xy, int cellId, Road road, int vWidth, int vHeight, int id, Color color){
 		this.position = xy;
 		this.currentCell = cellId;
 		this.track = road;
@@ -26,9 +32,11 @@ public class Vehicle {
 		this.vehicleHeight = vHeight;
 		this.color = color;
         this.currentSpeed = 0.0;
+        this.vehicleId = id;
+        this.isCrashed = false;
 	}
 	
-	public Vehicle(Point xy,int cellId, Road road, int vWidth, int vHeight, String imagePath){
+	public Vehicle(Point xy, int cellId, Road road, int vWidth, int vHeight, int id, String imagePath){
 		 this.position = xy;
 		 this.currentCell = cellId;
 		 this.track = road;
@@ -37,6 +45,8 @@ public class Vehicle {
 		 this.color = Color.gray;
 		 this.imagePath = imagePath;
 		 this.currentSpeed = 0.0;
+		 this.vehicleId = id;
+		 this.isCrashed = false;
 	 }
 	
 	public void setCurrentSpeed(double currentSpeed){
@@ -86,6 +96,12 @@ public class Vehicle {
 		}
 		*/
 	}
+
+	public void collisionNotification(int vehicle1ID, int vehicle2ID) {
+		if (this.vehicleId == vehicle1ID || this.vehicleId == vehicle1ID) {
+		    this.isCrashed = true;
+        }
+	}
 	
 	public Point getPosition(){
 		return position;
@@ -122,8 +138,12 @@ public class Vehicle {
 	public double getCurrentSpeed() {
 		return currentSpeed;
 	}
-	
-	public void setColor(Color color){
+
+    public boolean isCrashed() {
+        return isCrashed;
+    }
+
+    public void setColor(Color color){
 		this.color = color;
 	}
 }

@@ -29,8 +29,8 @@ public class SimulationController {
     	this.center = new Point((int)(this.screen_width / 2), (int)(this.screen_height / 2));
     	this.road = new Road(this.center, (int)this.screen_width, (int)this.screen_height);
     	
-    	AggressiveDriver d1 = new AggressiveDriver(new Vehicle(new Point(0,0), 0, this.road, 30, 50, "pink-sports-car.png"), "Rob", 20, "Male");
-    	NormalDriver d2 = new NormalDriver(new Vehicle(new Point(30,0), 0, this.road, 30, 50, "green-sports-car.png"), "Louise", 26, "Female");
+    	AggressiveDriver d1 = new AggressiveDriver(new Vehicle(new Point(0,0), 0, this.road, 30, 50, 1, "pink-sports-car.png"), "Rob", 20, "Male");
+    	NormalDriver d2 = new NormalDriver(new Vehicle(new Point(30,0), 0, this.road, 30, 50, 2, "green-sports-car.png"), "Louise", 26, "Female");
     	
     	drivers.add(d1);       
     	drivers.add(d2);
