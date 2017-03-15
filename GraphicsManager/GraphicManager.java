@@ -8,22 +8,15 @@ import Driver.*;
 public class GraphicManager implements Runnable{
 
     private String title;
-    private int width, height;
     private double screenWidth, screenHeight;
     public DrawingComponent draw;
-    private ArrayList<Driver> drivers;
 
-    private Thread thread;
+    //private Thread thread;
     private IDisplay display;
 
-    public GraphicManager(Point centerPoint, int width, int height, double screenWidth, double screenHeight, ArrayList<Driver> drivers, Road road) {
-        this.width = width;
-        this.height = height;
+    public GraphicManager(double screenWidth, double screenHeight, ArrayList<Driver> drivers, Road road) {
         this.title = "Traffic Flow Simulation";
-        //this.centerPoint = centerPoint;
-        this.drivers = drivers;
-        //this.road = road;
-        this.draw = new DrawingComponent(screenHeight, screenWidth, road, drivers);
+        this.draw = new DrawingComponent(screenWidth, screenHeight, road, drivers);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
     }
@@ -36,17 +29,17 @@ public class GraphicManager implements Runnable{
         		draw.render(display);
         		Thread.sleep(33);
         	} catch(InterruptedException ex) {
-        		
+        		ex.printStackTrace();
         	}
         }
     }
-    
 
     public void init() {
-        display = new Display(title, width, height, screenWidth, screenHeight);
+        display = new Display(title, screenWidth, screenHeight);
         display.createDisplay();
     }
 
+    /*
     public synchronized void start() {
         if (thread == null) {
             thread = new Thread(this);
@@ -60,7 +53,7 @@ public class GraphicManager implements Runnable{
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }
 
 

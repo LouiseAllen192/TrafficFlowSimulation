@@ -15,8 +15,8 @@ import javax.imageio.ImageIO;
 
 public class DrawingComponent implements IDrawingComponent{
 
-    private int width;
-    private int height;
+    private int screenWidth;
+    private int screenHeight;
     private Graphics2D g2d;
     private BufferStrategy buffer;
     private Road road;
@@ -24,9 +24,9 @@ public class DrawingComponent implements IDrawingComponent{
     private final String GRASS_IMAGE_PATH;
 
 
-    public DrawingComponent(double width, double height, Road road, ArrayList<Driver> drivers) {
-        this.width = (int) width;
-        this.height = (int) height;
+    public DrawingComponent(double screenWidth, double screenHeight, Road road, ArrayList<Driver> drivers) {
+        this.screenWidth = (int) screenWidth;
+        this.screenHeight = (int) screenHeight;
         this.road = road;
         this.drivers = drivers;
         this.GRASS_IMAGE_PATH = "grass.png";
@@ -36,7 +36,7 @@ public class DrawingComponent implements IDrawingComponent{
     	setBuffer(display);
 
         g2d = (Graphics2D) buffer.getDrawGraphics();
-    	g2d.clearRect(0, 0, width, height);
+    	g2d.clearRect(0, 0, screenWidth, screenHeight);
 
         paintGrassBackgroundImage();
         drawRoad();
