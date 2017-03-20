@@ -45,7 +45,7 @@ public class Vehicle implements DriverCollisionObserver{
 		 this.color = Color.gray;
 		 this.imagePath = imagePath;
 		 this.currentSpeed = 0.0;
-		 this.vehicleId = id;
+	     this.vehicleId = id;
 		 this.isCrashed = false;
 	 }
 	
@@ -54,10 +54,11 @@ public class Vehicle implements DriverCollisionObserver{
 	}
 	
 	public void accelerate(int speedModifier){
-		//System.out.println("acc");
-		this.incrementCellId(speedModifier);
-		this.updatePosition(track.getPosition(this.currentCell));
-		this.updateAngle(track.getCarAngle(this.currentCell));
+		if(!isCrashed){
+			this.incrementCellId(speedModifier);
+			this.updatePosition(track.getPosition(this.currentCell));
+			this.updateAngle(track.getCarAngle(this.currentCell));
+		}
 	}
 	
 	public void decellerate(){
@@ -67,7 +68,9 @@ public class Vehicle implements DriverCollisionObserver{
 	}
 	
 	public void incrementCellId(int speedModifier){
+		int previousCell = this.currentCell;
 		this.currentCell = (this.currentCell + speedModifier) % track.getNumCells();
+		track.occupyCell(previousCell, currentCell, this.vehicleId);
 	}
 	
 	public void decrementCellId(){
@@ -98,7 +101,7 @@ public class Vehicle implements DriverCollisionObserver{
 	}
 
 	public void collisionNotification(int vehicle1ID, int vehicle2ID) {
-		if (this.vehicleId == vehicle1ID || this.vehicleId == vehicle1ID) {
+		if (this.vehicleId == vehicle1ID || this.vehicleId == vehicle2ID) {
 		    this.isCrashed = true;
         }
 	}
@@ -146,5 +149,9 @@ public class Vehicle implements DriverCollisionObserver{
     public void setColor(Color color){
 		this.color = color;
 	}
+    
+    public int getID(){
+    	return vehicleId;
+    }
 }
 

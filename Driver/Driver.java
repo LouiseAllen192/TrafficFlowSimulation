@@ -108,7 +108,8 @@ public class Driver implements Runnable {
 
 	public void run() {
 		while(true) {
-			this.drive();
+			if(!hasCrashed)
+				this.drive();
 			try {
 				Thread.sleep(33);
 			} catch(InterruptedException ex) {
