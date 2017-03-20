@@ -1,7 +1,5 @@
 package SimulationControl;
 
-
-import GraphicsManager.GraphicManager;
 import Driver.*;
 import Vehicle.Vehicle;
 import Road.Road;
@@ -17,7 +15,7 @@ public class SimulationController {
     private final int agressive_drivers = 1;
     private double screen_width, screen_height;
     private Point center;
-    private GraphicManager graphics_manager;
+    private GraphicsController graphics_manager;
     private Road road;
 
     public SimulationController() {
@@ -35,7 +33,7 @@ public class SimulationController {
     	drivers.add(d1);       
     	drivers.add(d2);
 
-    	this.graphics_manager = new GraphicManager(this.screen_width, this.screen_height ,drivers, this.road);
+    	this.graphics_manager = new GraphicsController(this.screen_width, this.screen_height ,drivers, this.road);
     }
     
     public void begin() {
