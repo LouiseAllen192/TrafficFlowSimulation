@@ -1,13 +1,13 @@
 package SimulationControl;
 
 import java.util.ArrayList;
-import Vehicle.Vehicle;
+
 import Driver.Driver;
 import CollisionDetection.*;
 
 public class CollisionDetectionController implements Runnable{
 	
-	private CollisionDetectionSubject cd;
+	private I_CollisionDetectionSubject cd;
 	private ArrayList<Driver> drivers;
 	private boolean running;
 	

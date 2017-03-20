@@ -3,13 +3,10 @@ package Vehicle;
 import java.awt.Color;
 import java.awt.Point;
 
-import CollisionDetection.CollisionDetection;
-import CollisionDetection.CollisionDetectionSubject;
-import Driver.DriverCollisionObserver;
 import Road.Road;
 
 
-public class Vehicle implements DriverCollisionObserver{
+public class Vehicle implements I_VehicleCollisionObserver {
 	
 	private int currentCell,vehicleWidth,vehicleHeight;
 	public static enum manufacturer{

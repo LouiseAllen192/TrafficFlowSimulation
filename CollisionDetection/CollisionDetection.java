@@ -1,24 +1,24 @@
 package CollisionDetection;
 
-import Driver.DriverCollisionObserver;
+import Vehicle.I_VehicleCollisionObserver;
 import Road.Road;
 
 import java.util.ArrayList;
 
-public class CollisionDetection implements CollisionDetectionSubject {
+public class CollisionDetection implements I_CollisionDetectionSubject {
 
-    private ArrayList<DriverCollisionObserver> observers;
+    private ArrayList<I_VehicleCollisionObserver> observers;
 
     public CollisionDetection() {
         observers = new ArrayList<>();
 
     }
 
-    public void registerObserver(DriverCollisionObserver o) {
+    public void registerObserver(I_VehicleCollisionObserver o) {
         observers.add(o);
     }
 
-    public void removeObserver(DriverCollisionObserver o) {
+    public void removeObserver(I_VehicleCollisionObserver o) {
         if (observers.contains(o)) {
             observers.remove(o);
         }
@@ -26,7 +26,7 @@ public class CollisionDetection implements CollisionDetectionSubject {
 
     public void notifyObservers(int vehicle1ID, int vehicle2ID) {
         for (int i = 0; i < observers.size(); i++) {
-            DriverCollisionObserver observer = observers.get(i);
+            I_VehicleCollisionObserver observer = observers.get(i);
             observer.collisionNotification(vehicle1ID, vehicle2ID);
         }
     }
