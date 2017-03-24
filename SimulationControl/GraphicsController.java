@@ -11,6 +11,9 @@ import Road.Road;
 public class GraphicsController implements Runnable{
 
     private String title;
+    
+    
+    
     private double screenWidth, screenHeight;
     public DrawingComponent draw;
 
