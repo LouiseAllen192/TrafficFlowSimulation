@@ -38,7 +38,7 @@ public class CollisionDetectionController implements Runnable{
 			
 			for(Driver d : drivers){
 				if(!(d.getDriverVehicle().isCrashed()))
-					cd.checkForCollisions(d.getDriverVehicle().getID(), d.getDriverVehicle().getCurrentCell(), d.getDriverVehicle().getRoad());
+					cd.checkForCollisions(d.getDriverVehicle().getID(), d.getDriverVehicle().getCurrentCell(), d.getDriverVehicle().getLane());
 			}
 		}		
 	}

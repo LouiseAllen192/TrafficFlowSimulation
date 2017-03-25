@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Point;
 
 import Road.Road;
+import Road.Lane;
 
 
 public class Vehicle implements I_VehicleCollisionObserver {
@@ -14,17 +15,21 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	}
 	
 	private double maxSpeed,currentSpeed,angle;
-	private Road track;
+	private Lane track;
+	private Road road;
+	private int currentLaneId;
 	private Point position;
 	private Color color;
 	private String imagePath;
 	private int vehicleId;
 	private boolean isCrashed;
 	
-	public Vehicle(Point xy, int cellId, Road road, int vWidth, int vHeight, int id, Color color){
+	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, Color color){
 		this.position = xy;
 		this.currentCell = cellId;
-		this.track = road;
+		this.road = road;
+		this.currentLaneId = laneId;
+		this.track = road.getLane(currentLaneId);
 		this.vehicleWidth = vWidth;
 		this.vehicleHeight = vHeight;
 		this.color = color;
@@ -33,10 +38,12 @@ public class Vehicle implements I_VehicleCollisionObserver {
         this.isCrashed = false;
 	}
 	
-	public Vehicle(Point xy, int cellId, Road road, int vWidth, int vHeight, int id, String imagePath){
+	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, String imagePath){
 		 this.position = xy;
 		 this.currentCell = cellId;
-		 this.track = road;
+		 this.road = road;
+		 this.currentLaneId = laneId;
+		 this.track = road.getLane(currentLaneId);
 		 this.vehicleWidth = vWidth;
 		 this.vehicleHeight = vHeight;
 		 this.color = Color.gray;
@@ -112,6 +119,10 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	}
 	
 	public Road getRoad(){
+		return road;
+	}
+
+	public Lane getLane() {
 		return track;
 	}
 	

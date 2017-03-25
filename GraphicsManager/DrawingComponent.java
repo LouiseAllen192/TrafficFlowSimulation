@@ -8,8 +8,9 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.util.ArrayList;
 import Vehicle.Vehicle;
-import Road.Road;
+import Road.*;
 import Driver.Driver;
+import javafx.scene.shape.Circle;
 
 import javax.imageio.ImageIO;
 
@@ -40,7 +41,11 @@ public class DrawingComponent implements IDrawingComponent{
     	g2d.clearRect(0, 0, screenWidth, screenHeight);
 
         paintGrassBackgroundImage();
-        drawRoad();
+
+        ArrayList<Lane> lanes = road.getLanes();
+        for (Lane l : lanes) {
+            drawLane(l);
+        }
 
     	for (Driver d : this.drivers) {
             drawVehicle(d.getDriverVehicle());
@@ -69,10 +74,10 @@ public class DrawingComponent implements IDrawingComponent{
         panel.paintComponent(g2d);
     }
 
-    private void drawRoad() {
-        g2d.setColor(this.road.getRoadColor());
-        g2d.setStroke(new BasicStroke(this.road.getRoadWidth()));
-        g2d.draw(new Ellipse2D.Double(this.road.getX(), this.road.getY(), this.road.getWidth(), this.road.getHeight()));
+    private void drawLane(Lane lane) {
+        g2d.setColor(lane.getLaneColor());
+        g2d.setStroke(new BasicStroke(lane.getLaneWidth()));
+        g2d.draw(new Ellipse2D.Double(lane.getX(), lane.getY(), lane.getWidth(), lane.getHeight()));
     }
 
     private void drawVehicle(Vehicle v) {

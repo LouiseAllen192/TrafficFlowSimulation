@@ -2,6 +2,7 @@ package CollisionDetection;
 
 import Vehicle.I_VehicleCollisionObserver;
 import Road.Road;
+import Road.Lane;
 
 import java.util.ArrayList;
 
@@ -31,7 +32,7 @@ public class CollisionDetection implements I_CollisionDetectionSubject {
         }
     }
     
-    public int checkForCollisions(int vehicleID, int cellID, Road track){
+    public int checkForCollisions(int vehicleID, int cellID, Lane track){
 		int cell_count = track.getNumCells();
 		int lowerBound = Math.floorMod((cellID-3), cell_count); //((cellID - 100)%cell_count);
 		int upperBound = (cellID+3) % cell_count;

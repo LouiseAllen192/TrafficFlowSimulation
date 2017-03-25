@@ -1,105 +1,73 @@
 package Road;
 
 import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 
 public class Road {
-	
+
+    private ArrayList<Lane> lanes;
     private Point center;
-    private int width;
-    private int height;
-    private int cell_count;
-    private int road_width;
-    private double angle_per_cell;
-    private HashMap<Integer, Point> coordinates;
-    private HashMap<Integer, Integer> occupiedCells;
+    private int numCells;
+    private int laneWidth;
+    private int screenWidth;
+    private int screenHeigth;
     private final Color ROAD_COLOR;
 
-    public Road(Point center, int width, int height) {
-        this.center = center;
-        this.width = width;
-        this.height = height;
-        this.cell_count = 1000;
-        this.road_width = 50;
-        this.angle_per_cell = 360.0 / this.cell_count;
-        this.coordinates = new HashMap<>();
-        this.occupiedCells = new HashMap<>();
-        this.ROAD_COLOR = new Color(77, 77, 77);
+    public Road(int numLanes, Point center, int laneWidth, int width, int height) {
+       lanes = new ArrayList<>();
+       this.center = center;
+       this.laneWidth = laneWidth;
+       this.screenWidth = width;
+       this.screenHeigth = height;
+       this.numCells = 1000;
+       this.ROAD_COLOR = new Color(77, 77, 77);
+
+       addLanes(numLanes);
     }
-    
-    public int getX() {
-    	return this.center.x / 2;
-    }
-    
-    public int getY() {
-    	return this.center.y / 2;
-    }
-    
-    public int getWidth() {
-    	return this.width;
-    }
-    
-    public int getHeight() {
-    	return this.height;
+
+    public ArrayList<Lane> getLanes() {
+        return lanes;
     }
 
     public int getNumCells() {
-        return this.cell_count;
+        return numCells;
     }
 
     public Color getRoadColor() {
         return ROAD_COLOR;
     }
 
-    public int getRoadWidth() {
-        return this.road_width;
+    private void addLanes(int numLanes) {
+        int laneOffset = laneWidth / 2;
+
+        int currentWidth = screenWidth;
+        int currentHeight = screenHeigth;
+
+        int currentX = (int) center.getX();
+        int currentY = (int) center.getY();
+
+
+        //To be removed after - just hear for clarity to see lanes more clearly
+
+        ArrayList<Color> c = new ArrayList<>();
+        c.add(new Color(144, 150, 160));
+        c.add(new Color(111, 114, 119));
+        c.add(new Color(71, 73, 76));
+
+
+        for (int i = 0; i < numLanes; i++) {
+
+            lanes.add(new Lane(currentX, currentY, currentWidth, currentHeight, laneWidth, numCells, c.get(i)));
+
+            currentWidth += laneWidth * 2;
+            currentHeight += laneWidth * 2;
+
+            currentX -= laneWidth * 2;
+            currentY -= laneWidth * 2;
+        }
     }
 
-    public Point getPosition(int cell_index) {
-       	//if (this.coordinates.containsKey(cell_index)) {
-    		//return this.coordinates.get(cell_index);
-    	//}
-    	
-        Point p = new Point();
-        double angle = this.getAngle(cell_index);
-        
-        p.x = (int)(((this.center.x / 2) + (this.getWidth() / 2)) + ((this.getWidth() / 2)  * Math.cos(Math.toRadians(angle))));
-        p.y = (int)(((this.center.y / 2) + (this.getHeight() / 2)) + ((this.getHeight() / 2) * Math.sin(Math.toRadians(angle))));
-        //this.coordinates.put(cell_index, p);
-        
-        return p;
-    }
-
-    private double getAngle(int cell_index) {
-        return this.angle_per_cell * (cell_index % this.cell_count);
-    }
-
-    public double getCarAngle(int cell_index) {
-        //TODO: functionality to get angle car is rotated at
-    	return Math.toRadians(this.angle_per_cell * (cell_index % this.cell_count)) - 1.5708;
-    }
-    
-    public void occupyCell(int previousCell, int cellID, int vehicleID) {
-    	//occupiedCells.remove(previousCell);
-    	occupiedCells.put(previousCell, -1);
-    	occupiedCells.put(cellID, vehicleID);
-    }
-    
-    public int getCarAtCell(int key) {
-    	
-    	//System.out.println("key:"+key+ " size of occ:"+occupiedCells.size()+occupiedCells.get(key));
-    	if ((this.occupiedCells.containsKey(key)) && (this.occupiedCells.get(key) != null)) {
-    		if(this.occupiedCells.get(key) != -1 && this.occupiedCells.get(key) != 0) {
-	    		/*System.out.print("Key: " +key+ " Hashmap size: " +occupiedCells.size()+ "  Value: ");
-	        	System.out.println(this.occupiedCells.get(key));*/
-	    		return occupiedCells.get(key);
-    		}
-    	}
-    	
-    	return -1;
-    }
-    
-    public void occupiedCellsSize() {
-    	System.out.println("oc size: "+occupiedCells.size());
+    public Lane getLane(int laneId) {
+        return lanes.get(laneId);
     }
 }
