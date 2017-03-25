@@ -6,23 +6,20 @@ import java.awt.Point;
 import Road.Road;
 import Road.Lane;
 
-
 public class Vehicle implements I_VehicleCollisionObserver {
 	
-	private int currentCell,vehicleWidth,vehicleHeight;
+
 	public static enum manufacturer{
 		Toyota,Volkswagen,Hyundai,Ford,Nissan,Mazda
 	}
-	
+    private int currentCell, vehicleWidth, vehicleHeight, currentLaneId, vehicleId;
 	private double maxSpeed,currentSpeed,angle;
 	private Lane track;
 	private Road road;
-	private int currentLaneId;
 	private Point position;
 	private Color color;
 	private String imagePath;
-	private int vehicleId;
-	private boolean isCrashed;
+	private I_VehicleState state;
 	
 	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, Color color){
 		this.position = xy;
@@ -35,7 +32,7 @@ public class Vehicle implements I_VehicleCollisionObserver {
 		this.color = color;
         this.currentSpeed = 0.0;
         this.vehicleId = id;
-        this.isCrashed = false;
+        this.state = new VehicleDrivingState();
 	}
 	
 	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, String imagePath){
@@ -50,19 +47,20 @@ public class Vehicle implements I_VehicleCollisionObserver {
 		 this.imagePath = imagePath;
 		 this.currentSpeed = 0.0;
 	     this.vehicleId = id;
-		 this.isCrashed = false;
+		 this.state = new VehicleDrivingState();
+
 	 }
+
+	 public int getCurrentCellId() {
+	    return this.currentCell;
+     }
 	
 	public void setCurrentSpeed(double currentSpeed){
 		this.currentSpeed = currentSpeed;
 	}
 	
 	public void accelerate(int speedModifier){
-		if(!isCrashed){
-			this.incrementCellId(speedModifier);
-			this.updatePosition(track.getPosition(this.currentCell));
-			this.updateAngle(track.getCarAngle(this.currentCell));
-		}
+		state.accelerate(speedModifier, this, track);
 	}
 	
 	public void decellerate(){
@@ -81,7 +79,7 @@ public class Vehicle implements I_VehicleCollisionObserver {
 		this.currentCell = (this.currentCell - 1) % track.getNumCells();
 	}
 	
-	private void updateAngle(double angle){
+	public void updateAngle(double angle){
 		this.angle = angle;
 	}
 
@@ -106,7 +104,7 @@ public class Vehicle implements I_VehicleCollisionObserver {
 
 	public void collisionNotification(int vehicle1ID, int vehicle2ID) {
 		if (this.vehicleId == vehicle1ID || this.vehicleId == vehicle2ID) {
-		    this.isCrashed = true;
+		    this.state = new VehicleCrashedState();
         }
 	}
 	
@@ -151,7 +149,11 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	}
 
     public boolean isCrashed() {
-        return isCrashed;
+        if (this.state.getState() == VehicleStatesEnum.CRASHED) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void setColor(Color color){
