@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import Driver.Driver;
 import CollisionDetection.*;
 
-public class CollisionDetectionController implements Runnable{
+public class CollisionDetectionController extends Controller implements Runnable {
 	
 	private I_CollisionDetectionSubject cd;
 	private ArrayList<Driver> drivers;
 	private boolean running;
+	
 	
 	public CollisionDetectionController(ArrayList<Driver> d) {
 		this.cd  = new CollisionDetection();

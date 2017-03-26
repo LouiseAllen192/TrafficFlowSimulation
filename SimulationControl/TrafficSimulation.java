@@ -2,10 +2,12 @@ package SimulationControl;
 
 import SensoryPerception.SensoryPerception;
 
-public class TrafficSimulation {
+public class TrafficSimulation extends Controller{
 
     public static void main(String[] args) {
-        SimulationController sc = new SimulationController();
+    	SimpleControllerFactory factory = new SimpleControllerFactory();
+        Controller sc = factory.createController("Simulation Controller");
+    	//SimulationController sc = new SimulationController();
         sc.begin();
     }
 }

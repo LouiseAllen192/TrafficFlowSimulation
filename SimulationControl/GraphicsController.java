@@ -8,12 +8,9 @@ import GraphicsManager.DrawingComponent;
 import GraphicsManager.IDisplay;
 import Road.Road;
 
-public class GraphicsController implements Runnable{
+public class GraphicsController extends Controller implements Runnable {
 
     private String title;
-    
-    
-    
     private double screenWidth, screenHeight;
     public DrawingComponent draw;
 
