@@ -5,6 +5,7 @@ import org.omg.PortableInterceptor.TRANSPORT_RETRY;
 import SensoryPerception.Hearing;
 import SensoryPerception.Sight;
 import Vehicle.Vehicle;
+import Vehicle.VehicleStatesEnum;
 
 public class Driver implements Runnable {
 
@@ -94,7 +95,7 @@ public class Driver implements Runnable {
 		this.hasCrashed = hasCrashed;
 	}
 
-	public void overtake() {
+	public void checkAvailableLanes() {
 		//check what lanes can be moved into
 		boolean laneToLeft = true;
 		boolean laneToRight = true;
@@ -112,35 +113,24 @@ public class Driver implements Runnable {
 		if(currentLane == (noOfLanes-1))
 			laneToLeft = false;
 		
-		//for the next two ifs, call vehicle.getLane and then call checkOccupiedCells for say 10 cells either side of our current position (less for aggressive, more for cautious)
-		if(laneToLeft) {
+		if(laneToLeft)
 			leftClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane+1), currentCell, vehicleID, isCrashed, 10, 10));
-			if(leftClear) {
-				System.out.println("Can go left");
-				moveLane((driverVehicle.getCurrentLaneID())+1);
-			}
-			else
-				System.out.println("LEFT NOT CLEAR");
-		}
-		else if(laneToRight) {
+		
+		if(laneToRight)
 			rightClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane-1), currentCell, vehicleID, isCrashed, 10, 10));
-			if(rightClear) {
-				System.out.println("Can go right");
-				moveLane(driverVehicle.getCurrentLaneID()-1);
-			}
+		
+		if(leftClear && rightClear) {
+			//pick random lane to move into
+			if(Math.random() < 0.5)
+				rightClear = false;
 			else
-				System.out.println("RIGHT NOT CLEAR");
+				leftClear = false;
 		}
 		
-		/*if(leftClear && rightClear)
-			//pick random one
-		else if(leftClear)
-			//moveLeft
+		if(leftClear)
+			this.driverVehicle.getState().moveLane(currentLane+1, this.driverVehicle);
 		else if(rightClear)
-			//moveRight*/
-		
-		//check if those lanes have cars near
-		//move*/
+			this.driverVehicle.getState().moveLane(currentLane-1, this.driverVehicle);
 	}
 
 	public void stop() {
@@ -153,7 +143,7 @@ public class Driver implements Runnable {
 
 	public void run() {
 		while(true) {
-			if(!this.driverVehicle.isCrashed())
+			if(this.driverVehicle.getStateEnum() == VehicleStatesEnum.DRIVING)
 				this.drive();
 			try {
 				Thread.sleep(33);
@@ -161,12 +151,5 @@ public class Driver implements Runnable {
 				
 			}
 		}
-	}
-	
-	public void moveLane(int laneID) {
-		int currentCell = this.driverVehicle.getCurrentCellId();
-		this.driverVehicle.getLane().removeVehicle(currentCell);
-		//this.driverVehicle.getRoad().getLane(laneID).addCar(currentCell, this.getDriverVehicle().getID());
-		driverVehicle.changeLane(laneID);
 	}
 }

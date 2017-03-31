@@ -168,9 +168,17 @@ public class Vehicle implements I_VehicleCollisionObserver {
     	return this.currentLaneId;
     }
     
-    public void changeLane(int laneID) {
+    public void setLane(int laneID) {
     	this.currentLaneId = laneID;
 		this.track = road.getLane(laneID);
+    }
+    
+    public VehicleStatesEnum getStateEnum() {
+        return this.state.getState();
+    }
+    
+    public I_VehicleState getState() {
+        return this.state;
     }
 }
 

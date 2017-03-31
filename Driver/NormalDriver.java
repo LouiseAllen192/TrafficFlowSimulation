@@ -23,7 +23,7 @@ public class NormalDriver extends Driver {
 		//run calls drive
 		boolean carAhead = this.getDriverSight().checkLane(this.driverVehicle.getLane(), this.driverVehicle.getCurrentCell(), this.driverVehicle.getID(), this.driverVehicle.isCrashed(), 0, 15);
 		if(carAhead)
-			this.overtake();
+			this.checkAvailableLanes();
 		this.driverVehicle.accelerate(speedModifier);
 	}
 }

@@ -13,4 +13,9 @@ public class VehicleDrivingState implements I_VehicleState{
     public VehicleStatesEnum getState() {
         return VehicleStatesEnum.DRIVING;
     }
+    
+    public void moveLane(int laneID, Vehicle v) {
+		v.getLane().removeVehicle(v.getCurrentCell());
+		v.setLane(laneID);
+	}
 }

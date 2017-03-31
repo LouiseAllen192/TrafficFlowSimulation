@@ -11,4 +11,8 @@ public class VehicleStoppedState implements I_VehicleState{
     public VehicleStatesEnum getState() {
         return VehicleStatesEnum.STOPPED;
     }
+    
+    public void moveLane(int laneID, Vehicle v) {
+        //Will not move lane when Stopped
+	}
 }
