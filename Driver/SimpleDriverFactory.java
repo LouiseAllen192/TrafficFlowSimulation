@@ -10,6 +10,8 @@ public class SimpleDriverFactory {
 			d = new AggressiveDriver(driverVehicle, name, age, sex);
 		else if(type.equals("Normal"))
 			d = new NormalDriver(driverVehicle, name, age, sex);
+		else if(type.equals("Cautious"))
+			d = new CautiousDriver(driverVehicle, name, age, sex);
 		return d;
 	}
 }

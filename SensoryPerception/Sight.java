@@ -7,14 +7,14 @@ public class Sight {
 
     }
 
-	public boolean checkLane(Lane currentLane, int currentCell, int vehicleID, boolean isCrashed, int cellsBehind, int cellsAhead) {
+	public boolean checkLane(Lane currentLane, int currentCell, int vehicleID, int cellsBehind, int cellsAhead) {
 		int cell_count = currentLane.getNumCells();
 		int i = currentCell - cellsBehind;
 		int limit = Math.floorMod((currentCell+cellsAhead), cell_count);
 		int otherCarID;
 		boolean vehicleSpotted = false;
 		
-		while(i != limit && !vehicleSpotted && !isCrashed) {
+		while(i != limit && !vehicleSpotted) {
 			otherCarID = currentLane.getCarAtCell(i);
 			
 			if((otherCarID != -1) && (otherCarID != vehicleID)) {

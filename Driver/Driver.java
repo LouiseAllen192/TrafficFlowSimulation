@@ -95,42 +95,55 @@ public class Driver implements Runnable {
 		this.hasCrashed = hasCrashed;
 	}
 
-	public void checkAvailableLanes() {
-		//check what lanes can be moved into
-		boolean laneToLeft = true;
-		boolean laneToRight = true;
-		boolean leftClear = false;
-		boolean rightClear = false;
-		boolean isCrashed = this.driverVehicle.isCrashed();
-		int currentLane = this.driverVehicle.getCurrentLaneID();
-		int noOfLanes = this.driverVehicle.getRoad().getLanes().size();
-		int currentCell = this.driverVehicle.getCurrentCell();
-		int vehicleID = this.driverVehicle.getID();
+	public double checkAvailableLanes(int cellsToCheck, double chanceToCrash) {
+		//check what lanes can be moved into after spotting vehicle ahead
+		//chanceToCrash should be a decimal between 0 and 1
+		double rand = Math.random();
 		
-		if(currentLane == 0)
-			laneToRight = false;
-		
-		if(currentLane == (noOfLanes-1))
-			laneToLeft = false;
-		
-		if(laneToLeft)
-			leftClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane+1), currentCell, vehicleID, isCrashed, 10, 10));
-		
-		if(laneToRight)
-			rightClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane-1), currentCell, vehicleID, isCrashed, 10, 10));
-		
-		if(leftClear && rightClear) {
-			//pick random lane to move into
-			if(Math.random() < 0.5)
-				rightClear = false;
-			else
-				leftClear = false;
+		if(rand > chanceToCrash) {
+			boolean laneToLeft = true;
+			boolean laneToRight = true;
+			boolean leftClear = false;
+			boolean rightClear = false;
+			int currentLane = this.driverVehicle.getCurrentLaneID();
+			int noOfLanes = this.driverVehicle.getRoad().getLanes().size();
+			int currentCell = this.driverVehicle.getCurrentCell();
+			int vehicleID = this.driverVehicle.getID();
+			
+			if(currentLane == 0)
+				laneToRight = false;
+			
+			if(currentLane == (noOfLanes-1))
+				laneToLeft = false;
+			
+			if(laneToLeft)
+				leftClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane+1), currentCell, vehicleID, cellsToCheck, cellsToCheck));
+			
+			if(laneToRight)
+				rightClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane-1), currentCell, vehicleID, cellsToCheck, cellsToCheck));
+			
+			if(leftClear && rightClear) {
+				//pick random lane to move into
+				if(Math.random() < 0.5)
+					rightClear = false;
+				else
+					leftClear = false;
+			}
+			
+			if(leftClear && rand > chanceToCrash)
+				this.driverVehicle.getState().moveLane(currentLane+1, this.driverVehicle);
+			else if(rightClear && rand > chanceToCrash)
+				this.driverVehicle.getState().moveLane(currentLane-1, this.driverVehicle);
+				
+			return chanceToCrash;
 		}
-		
-		if(leftClear)
-			this.driverVehicle.getState().moveLane(currentLane+1, this.driverVehicle);
-		else if(rightClear)
-			this.driverVehicle.getState().moveLane(currentLane-1, this.driverVehicle);
+		else {
+			System.out.println("OH NO GONNA CRASH");
+			return 1;
+			//return 1 so that car can't change lanes a second later
+			/*if we didn't change the driver's crashChance, they'd have to fail to check lanes 3 or 4 
+			  times in a row before they actually crash, due to how often this method is called */
+		}
 	}
 
 	public void stop() {
@@ -146,7 +159,7 @@ public class Driver implements Runnable {
 			if(this.driverVehicle.getStateEnum() == VehicleStatesEnum.DRIVING)
 				this.drive();
 			try {
-				Thread.sleep(33);
+				Thread.sleep(50);
 			} catch(InterruptedException ex) {
 				
 			}

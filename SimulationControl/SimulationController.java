@@ -35,13 +35,12 @@ public class SimulationController extends Controller {
     	
     	Driver d1 = d_fac.createDriver("Aggressive",v_fac.createVehicle(new Point(0,0), 0, this.road, 1, 30, 50, 1, "pink-sports-car.png"), "Rob", 20, "Male");
     	Driver d2 = d_fac.createDriver("Normal", v_fac.createVehicle(new Point(30,0), 250, this.road, 1, 30, 50, 2, "green-sports-car.png"), "Louise", 26, "Female");
-    	Driver d3 = d_fac.createDriver("Normal", v_fac.createVehicle(new Point(0,0), 500, this.road, 2, 30, 50, 3, "pink-sports-car.png"), "Russell", 20, "Male");
+    	Driver d3 = d_fac.createDriver("Cautious", v_fac.createVehicle(new Point(0,0), 502, this.road, 2, 30, 50, 3, "red-sports-car.png"), "Russell", 20, "Male");
     	
    
 		drivers.add(d1);
     	drivers.add(d2);
     	drivers.add(d3);
-    	
     	this.collisionController = c_fac.createController("Collision Detection Controller",drivers);
     	this.graphics_manager = c_fac.createController("Graphics Controller",this.screen_width, this.screen_height, this.drivers, this.road);
     }
