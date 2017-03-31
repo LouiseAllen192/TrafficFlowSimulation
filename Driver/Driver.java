@@ -164,31 +164,9 @@ public class Driver implements Runnable {
 	}
 	
 	public void moveLane(int laneID) {
-		//int currentLane = this.driverVehicle.getCurrentLaneID();
 		int currentCell = this.driverVehicle.getCurrentCellId();
-		this.driverVehicle.getLane().removeCar(currentCell);
+		this.driverVehicle.getLane().removeVehicle(currentCell);
 		//this.driverVehicle.getRoad().getLane(laneID).addCar(currentCell, this.getDriverVehicle().getID());
 		driverVehicle.changeLane(laneID);
 	}
-	
-	/*public boolean checkLane() {
-		int cell_count = this.driverVehicle.getLane().getNumCells();
-		int currentCell = this.driverVehicle.getCurrentCell();
-		int i = currentCell;
-		int limit = Math.floorMod((currentCell+10), cell_count);
-		int myVehicleID = this.driverVehicle.getID();
-		int otherCarID;
-		boolean vehicleSpotted = false;
-		
-		while(i != limit && !vehicleSpotted && !(this.driverVehicle.isCrashed())) {
-			otherCarID = this.driverVehicle.getLane().getCarAtCell(i);
-			
-			if((otherCarID != -1) && (otherCarID != myVehicleID)) {
-				vehicleSpotted = true;
-				System.out.println("Vehicle "+myVehicleID+"can't move left");
-			}
-			i = Math.floorMod((i+1), cell_count);
-		}
-		return vehicleSpotted;
-	}*/
 }
