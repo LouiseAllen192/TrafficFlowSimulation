@@ -4,6 +4,7 @@ import java.awt.*;
 import java.util.HashMap;
 
 public class Lane {
+	private int id;
     private Point center;
     private int width;
     private int height;
@@ -15,7 +16,8 @@ public class Lane {
     private final Color ROAD_COLOR;
     private Color laneColor;
 
-    public Lane(int x, int y, int width, int height, int lane_width, int numCells, Color color) {
+    public Lane(int id, int x, int y, int width, int height, int lane_width, int numCells, Color color) {
+    	this.id = id;
         this.center = new Point();
         center.x = x;
         center.y = y;
@@ -90,6 +92,10 @@ public class Lane {
         occupiedCells.put(previousCell, -1);
         occupiedCells.put(cellID, vehicleID);
     }
+    
+    public void removeCar(int cellID) {
+    	occupiedCells.put(cellID, -1);
+    }
 
     public int getCarAtCell(int key) {
         //System.out.println("key:"+key+ " size of occ:"+occupiedCells.size()+occupiedCells.get(key));
@@ -107,4 +113,3 @@ public class Lane {
         System.out.println("oc size: "+occupiedCells.size());
     }
 }
-

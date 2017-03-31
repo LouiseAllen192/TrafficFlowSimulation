@@ -57,7 +57,7 @@ public class Road {
 
         for (int i = 0; i < numLanes; i++) {
 
-            lanes.add(new Lane(currentX, currentY, currentWidth, currentHeight, laneWidth, numCells, c.get(i)));
+            lanes.add(new Lane(i, currentX, currentY, currentWidth, currentHeight, laneWidth, numCells, c.get(i)));
 
             currentWidth += laneWidth * 2;
             currentHeight += laneWidth * 2;

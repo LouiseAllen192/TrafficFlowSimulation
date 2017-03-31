@@ -21,6 +21,9 @@ public class AggressiveDriver extends Driver{
 	
 	public void drive(){
 		//run calls drive
+		boolean carAhead = this.getDriverSight().checkLane(this.driverVehicle.getLane(), this.driverVehicle.getCurrentCell(), this.driverVehicle.getID(), this.driverVehicle.isCrashed(), 0, 15);
+		if(carAhead)
+			this.overtake();
 		this.driverVehicle.accelerate(speedModifier);
 	}
 }

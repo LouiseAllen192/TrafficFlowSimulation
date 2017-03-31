@@ -95,7 +95,52 @@ public class Driver implements Runnable {
 	}
 
 	public void overtake() {
-		// We don't know how this will work yet
+		//check what lanes can be moved into
+		boolean laneToLeft = true;
+		boolean laneToRight = true;
+		boolean leftClear = false;
+		boolean rightClear = false;
+		boolean isCrashed = this.driverVehicle.isCrashed();
+		int currentLane = this.driverVehicle.getCurrentLaneID();
+		int noOfLanes = this.driverVehicle.getRoad().getLanes().size();
+		int currentCell = this.driverVehicle.getCurrentCell();
+		int vehicleID = this.driverVehicle.getID();
+		
+		if(currentLane == 0)
+			laneToRight = false;
+		
+		if(currentLane == (noOfLanes-1))
+			laneToLeft = false;
+		
+		//for the next two ifs, call vehicle.getLane and then call checkOccupiedCells for say 10 cells either side of our current position (less for aggressive, more for cautious)
+		if(laneToLeft) {
+			leftClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane+1), currentCell, vehicleID, isCrashed, 10, 10));
+			if(leftClear) {
+				System.out.println("Can go left");
+				moveLane((driverVehicle.getCurrentLaneID())+1);
+			}
+			else
+				System.out.println("LEFT NOT CLEAR");
+		}
+		else if(laneToRight) {
+			rightClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane-1), currentCell, vehicleID, isCrashed, 10, 10));
+			if(rightClear) {
+				System.out.println("Can go right");
+				moveLane(driverVehicle.getCurrentLaneID()-1);
+			}
+			else
+				System.out.println("RIGHT NOT CLEAR");
+		}
+		
+		/*if(leftClear && rightClear)
+			//pick random one
+		else if(leftClear)
+			//moveLeft
+		else if(rightClear)
+			//moveRight*/
+		
+		//check if those lanes have cars near
+		//move*/
 	}
 
 	public void stop() {
@@ -108,7 +153,7 @@ public class Driver implements Runnable {
 
 	public void run() {
 		while(true) {
-			if(!hasCrashed)
+			if(!this.driverVehicle.isCrashed())
 				this.drive();
 			try {
 				Thread.sleep(33);
@@ -117,4 +162,33 @@ public class Driver implements Runnable {
 			}
 		}
 	}
+	
+	public void moveLane(int laneID) {
+		//int currentLane = this.driverVehicle.getCurrentLaneID();
+		int currentCell = this.driverVehicle.getCurrentCellId();
+		this.driverVehicle.getLane().removeCar(currentCell);
+		//this.driverVehicle.getRoad().getLane(laneID).addCar(currentCell, this.getDriverVehicle().getID());
+		driverVehicle.changeLane(laneID);
+	}
+	
+	/*public boolean checkLane() {
+		int cell_count = this.driverVehicle.getLane().getNumCells();
+		int currentCell = this.driverVehicle.getCurrentCell();
+		int i = currentCell;
+		int limit = Math.floorMod((currentCell+10), cell_count);
+		int myVehicleID = this.driverVehicle.getID();
+		int otherCarID;
+		boolean vehicleSpotted = false;
+		
+		while(i != limit && !vehicleSpotted && !(this.driverVehicle.isCrashed())) {
+			otherCarID = this.driverVehicle.getLane().getCarAtCell(i);
+			
+			if((otherCarID != -1) && (otherCarID != myVehicleID)) {
+				vehicleSpotted = true;
+				System.out.println("Vehicle "+myVehicleID+"can't move left");
+			}
+			i = Math.floorMod((i+1), cell_count);
+		}
+		return vehicleSpotted;
+	}*/
 }
