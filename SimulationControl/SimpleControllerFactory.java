@@ -6,23 +6,17 @@ import Driver.Driver;
 import Road.Road;
 
 public class SimpleControllerFactory {
-	public Controller createController(String type){
-		if(type.equals("Simulation Controller"))
-			return new SimulationController();
-		else
-			return new TrafficSimulation();
-		
+
+	public Controller createSimulationController(SimpleControllerFactory factory) {
+        return new SimulationController(factory);
+    }
+
+	public Controller createCollisionDetectionController(ArrayList<Driver> d) {
+		return  new CollisionDetectionController(d);
 	}
-	public Controller createController(String type, ArrayList<Driver> d){
-		if(type.equals("Collision Detection Controller"))
-			return  new CollisionDetectionController(d);
-		return null;
-	}
-	public Controller createController(String type, double screenWidth, double screenHeight, ArrayList<Driver> drivers, Road road){
-		if(type.equals("Graphics Controller"))
-			return new GraphicsController(screenWidth, screenHeight, drivers, road);
-		return null;
-		
+
+	public Controller createGraphicsController(double screenWidth, double screenHeight, ArrayList<Driver> drivers, Road road){
+		return new GraphicsController(screenWidth, screenHeight, drivers, road);
 	}
 
 }

@@ -14,7 +14,6 @@ public class Driver implements Runnable {
 	private String name;
 	private int age;
 	private String sex;
-	private boolean hasCrashed;
 	protected double speedModifier;
 	protected Vehicle driverVehicle;
 
@@ -25,7 +24,6 @@ public class Driver implements Runnable {
 		name = "default";
 		age = 12;
 		sex = "Male";
-		hasCrashed = false;
 		speedModifier = 1;
 	}
 
@@ -36,7 +34,6 @@ public class Driver implements Runnable {
 		this.name = name;
 		this.age = age;
 		this.sex = sex;
-		this.hasCrashed = false;
 	}
 
 	public Hearing getDriverHearing() {
@@ -85,14 +82,6 @@ public class Driver implements Runnable {
 
 	public void setSex(String sex) {
 		this.sex = sex;
-	}
-
-	public boolean hasCrashed() {
-		return hasCrashed;
-	}
-
-	public void setHasCrashed(boolean hasCrashed) {
-		this.hasCrashed = hasCrashed;
 	}
 
 	public double checkAvailableLanes(int cellsToCheck, double chanceToCrash) {

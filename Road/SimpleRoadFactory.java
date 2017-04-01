@@ -1,6 +1,6 @@
 package Road;
 
-import java.awt.Point;
+import java.awt.*;
 
 public class SimpleRoadFactory {
 	public Road createRoad(int numLanes, Point center, int laneWidth, int width, int height){
