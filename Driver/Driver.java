@@ -127,12 +127,12 @@ public class Driver implements Runnable {
 			return chanceToCrash;
 		}
 		else {
-			System.out.println("OH NO GONNA CRASH");
-			return 1;
-			//return 1 so that car can't change lanes a second later
+            System.out.println("OH NO GONNA CRASH");
+            return 1;
+            //return 1 so that car can't change lanes a second later
 			/*if we didn't change the driver's crashChance, they'd have to fail to check lanes 3 or 4 
 			  times in a row before they actually crash, due to how often this method is called */
-		}
+        }
 	}
 
 	public void stop() {
@@ -145,7 +145,7 @@ public class Driver implements Runnable {
 
 	public void run() {
 		while(true) {
-			if(this.driverVehicle.getStateEnum() == VehicleStatesEnum.DRIVING)
+			//if(this.driverVehicle.getStateEnum() == VehicleStatesEnum.DRIVING)
 				this.drive();
 			try {
 				Thread.sleep(50);

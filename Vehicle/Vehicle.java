@@ -149,11 +149,7 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	}
 
     public boolean isCrashed() {
-        if (this.state.getState() == VehicleStatesEnum.CRASHED) {
-            return true;
-        } else {
-            return false;
-        }
+        return (this.state.getState() == VehicleStatesEnum.CRASHED);
     }
 
     public void setColor(Color color){
