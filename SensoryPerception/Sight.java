@@ -19,7 +19,7 @@ public class Sight {
 			
 			if((otherCarID != -1) && (otherCarID != vehicleID)) {
 				vehicleSpotted = true;
-				System.out.println("Vehicle "+vehicleID+"spotted "+otherCarID);
+				// System.out.println("Vehicle "+vehicleID+"spotted "+otherCarID);
 			}
 			i = Math.floorMod((i+1), cell_count);
 		}

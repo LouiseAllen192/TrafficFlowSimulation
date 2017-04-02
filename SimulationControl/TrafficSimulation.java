@@ -1,6 +1,6 @@
 package SimulationControl;
 
-public class TrafficSimulation extends Controller{
+public class TrafficSimulation extends Controller {
 
     public static void main(String[] args) {
     	SimpleControllerFactory factory = new SimpleControllerFactory();
@@ -8,4 +8,5 @@ public class TrafficSimulation extends Controller{
         Controller sc = factory.createSimulationController(factory);
         sc.begin();
     }
+    
 }

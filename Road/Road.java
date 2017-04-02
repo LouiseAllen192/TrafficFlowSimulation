@@ -1,6 +1,7 @@
 package Road;
 
 import java.awt.*;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.ArrayList;
 
 public class Road {
@@ -67,5 +68,9 @@ public class Road {
 
     public Lane getLane(int laneId) {
         return lanes.get(laneId);
+    }
+    
+    public int getRandomLane() {
+    	return ThreadLocalRandom.current().nextInt(0, this.lanes.size());
     }
 }

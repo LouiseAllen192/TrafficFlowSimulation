@@ -3,9 +3,10 @@ package SimulationControl;
 import java.util.ArrayList;
 
 import Driver.Driver;
+import Threading.Timer;
 import CollisionDetection.*;
 
-public class CollisionDetectionController extends Controller implements Runnable {
+public class CollisionDetectionController extends Controller {
 	
 	private I_CollisionDetectionSubject cd;
 	private ArrayList<Driver> drivers;
@@ -26,21 +27,18 @@ public class CollisionDetectionController extends Controller implements Runnable
 	
 	@Override
 	public void run() {
-		try{
-			Thread.sleep(2000);
-		}
-		catch(InterruptedException ex){}
-			
+		Timer t = new Timer(Timer.DEFAULT_FRAMERATE);
+    	t.setMessage("Collision Detection Controller");
 		while(running) {
-			try{
-				Thread.sleep(20);
+			t.start();
+			for(Driver d : drivers) {
+				if(!(d.getDriverVehicle().isCrashed())) {
+					cd.checkForCollisions(d.getDriverVehicle().getID(),
+							d.getDriverVehicle().getCurrentCell(),
+							d.getDriverVehicle().getLane());
+				}
 			}
-			catch(InterruptedException ex){}
-			
-			for(Driver d : drivers){
-				if(!(d.getDriverVehicle().isCrashed()))
-					cd.checkForCollisions(d.getDriverVehicle().getID(), d.getDriverVehicle().getCurrentCell(), d.getDriverVehicle().getLane());
-			}
+			t.end();
 		}		
 	}
 	

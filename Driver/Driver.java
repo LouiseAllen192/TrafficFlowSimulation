@@ -1,11 +1,9 @@
 package Driver;
 
-import org.omg.PortableInterceptor.TRANSPORT_RETRY;
-
 import SensoryPerception.Hearing;
 import SensoryPerception.Sight;
+import Threading.Timer;
 import Vehicle.Vehicle;
-import Vehicle.VehicleStatesEnum;
 
 public class Driver implements Runnable {
 
@@ -20,7 +18,6 @@ public class Driver implements Runnable {
 	public Driver() {
 		driverHearing = new Hearing();
 		driverSight = new Sight();
-		// driverVehicle = new Vehicle();
 		name = "default";
 		age = 12;
 		sex = "Male";
@@ -127,7 +124,7 @@ public class Driver implements Runnable {
 			return chanceToCrash;
 		}
 		else {
-            System.out.println("OH NO GONNA CRASH");
+            // System.out.println("OH NO GONNA CRASH");
             return 1;
             //return 1 so that car can't change lanes a second later
 			/*if we didn't change the driver's crashChance, they'd have to fail to check lanes 3 or 4 
@@ -144,14 +141,12 @@ public class Driver implements Runnable {
 	}
 
 	public void run() {
+		Timer t = new Timer(Timer.DEFAULT_FRAMERATE);
+    	t.setMessage("Driver");
 		while(true) {
-			//if(this.driverVehicle.getStateEnum() == VehicleStatesEnum.DRIVING)
-				this.drive();
-			try {
-				Thread.sleep(50);
-			} catch(InterruptedException ex) {
-				
-			}
+			t.start();
+			this.drive();
+			t.end();
 		}
 	}
 }

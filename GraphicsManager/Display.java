@@ -28,6 +28,7 @@ public class Display implements IDisplay {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setMinimumSize(new Dimension(this.width, this.height));
+        frame.setLocation(0, 0);
 
         canvas = new Canvas();
         canvas.setPreferredSize(this.screen);

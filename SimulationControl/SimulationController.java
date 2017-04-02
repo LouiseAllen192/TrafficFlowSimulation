@@ -40,6 +40,25 @@ public class SimulationController extends Controller {
     }
 
     private void addDriversToRoad(SimpleDriverFactory d_fac, SimpleVehicleFactory v_fac) {
+    	int count = 30;
+    	for (int i = 0; i < count; i++) {
+    		Driver d = null;
+    		int start_loc = (1000 / count) * i;
+    		switch (i % 3) {
+    		case 0:
+        		d = d_fac.createDriver("Aggressive",v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "pink-sports-car.png"), "Rob", 20, "Male");
+    			break;
+    		case 1:
+    			d = d_fac.createDriver("Normal", v_fac.createVehicle(new Point(30,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "green-sports-car.png"), "Louise", 26, "Female");
+    			break;
+    		case 2:
+    			d = d_fac.createDriver("Cautious", v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "red-sports-car.png"), "Russell", 20, "Male");
+    			break;
+    		}
+    		drivers.add(d);
+    	}
+    	
+    	/*
         Driver d1 = d_fac.createDriver("Aggressive",v_fac.createVehicle(new Point(0,0), 0, this.road, 1, 30, 50, 1, "pink-sports-car.png"), "Rob", 20, "Male");
         Driver d2 = d_fac.createDriver("Normal", v_fac.createVehicle(new Point(30,0), 250, this.road, 1, 30, 50, 2, "green-sports-car.png"), "Louise", 26, "Female");
         Driver d3 = d_fac.createDriver("Cautious", v_fac.createVehicle(new Point(0,0), 502, this.road, 2, 30, 50, 3, "red-sports-car.png"), "Russell", 20, "Male");
@@ -53,12 +72,13 @@ public class SimulationController extends Controller {
         drivers.add(d1);
         drivers.add(d2);
         drivers.add(d3);
-        //drivers.add(d4);
-        //drivers.add(d5);
-        //drivers.add(d6);
-        //drivers.add(d7);
-        //drivers.add(d8);
-        //drivers.add(d9);
+        drivers.add(d4);
+        drivers.add(d5);
+        drivers.add(d6);
+        drivers.add(d7);
+        drivers.add(d8);
+        drivers.add(d9);
+        */
     }
     
     public void begin() {

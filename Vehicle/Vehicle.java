@@ -1,7 +1,14 @@
 package Vehicle;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
 
 import Road.Road;
 import Road.Lane;
@@ -20,20 +27,7 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	private Color color;
 	private String imagePath;
 	private I_VehicleState state;
-	
-	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, Color color){
-		this.position = xy;
-		this.currentCell = cellId;
-		this.road = road;
-		this.currentLaneId = laneId;
-		this.track = road.getLane(currentLaneId);
-		this.vehicleWidth = vWidth;
-		this.vehicleHeight = vHeight;
-		this.color = color;
-        this.currentSpeed = 0.0;
-        this.vehicleId = id;
-        this.state = new VehicleDrivingState();
-	}
+	private BufferedImage carImage;
 	
 	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, String imagePath){
 		 this.position = xy;
@@ -48,12 +42,16 @@ public class Vehicle implements I_VehicleCollisionObserver {
 		 this.currentSpeed = 0.0;
 	     this.vehicleId = id;
 		 this.state = new VehicleDrivingState();
+		 this.carImage = createCarImage();
+	}
+	
+	public BufferedImage getCarImage() {
+		return this.carImage;
+	}
 
-	 }
-
-	 public int getCurrentCellId() {
+	public int getCurrentCellId() {
 	    return this.currentCell;
-     }
+    }
 	
 	public void setCurrentSpeed(double currentSpeed){
 		this.currentSpeed = currentSpeed;
@@ -84,22 +82,8 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	}
 
 	public void updatePosition(Point position) {
-		
 		this.position.x = position.x;
 		this.position.y = position.y;
-		/*
-		if (this.currentCell > 400 && this.currentCell < 600) {
-			this.position.x = position.x - this.vehicleWidth;
-		} else {
-			this.position.x = position.x;
-		}
-		
-		if (this.currentCell < track.getNumCells() / 2) {
-			this.position.y = position.y;
-		} else {
-			this.position.y = position.y - this.vehicleHeight;
-		}
-		*/
 	}
 
 	public void collisionNotification(int vehicle1ID, int vehicle2ID) {
@@ -176,5 +160,18 @@ public class Vehicle implements I_VehicleCollisionObserver {
     public I_VehicleState getState() {
         return this.state;
     }
+    
+	private BufferedImage createCarImage() {
+		try {
+            BufferedImage img = ImageIO.read(new File(this.getVehicleImagePath()));
+        	BufferedImage resized_car_image = new BufferedImage(this.getVehicleHeight(), this.getVehicleWidth(), BufferedImage.TYPE_INT_ARGB);
+	        Graphics2D graphics = resized_car_image.createGraphics();
+	        graphics.drawImage(img.getScaledInstance(this.getVehicleHeight(), this.getVehicleWidth(), Image.SCALE_SMOOTH), 0, 0, null);
+	        graphics.dispose();
+        	return resized_car_image;
+		} catch (IOException ex) {
+			return null;
+		}
+	}
 }
 

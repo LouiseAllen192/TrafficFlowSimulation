@@ -7,8 +7,9 @@ import GraphicsManager.Display;
 import GraphicsManager.DrawingComponent;
 import GraphicsManager.IDisplay;
 import Road.Road;
+import Threading.Timer;
 
-public class GraphicsController extends Controller implements Runnable {
+public class GraphicsController extends Controller {
 
     private String title;
     private double screenWidth, screenHeight;
@@ -19,25 +20,24 @@ public class GraphicsController extends Controller implements Runnable {
 
     public GraphicsController(double screenWidth, double screenHeight, ArrayList<Driver> drivers, Road road) {
         this.title = "Traffic Flow Simulation";
-        this.draw = new DrawingComponent(screenWidth, screenHeight, road, drivers);
         this.screenWidth = screenWidth;
         this.screenHeight = screenHeight;
+        this.initDisplay();
+        this.draw = new DrawingComponent(this.display, screenWidth, screenHeight, road, drivers);
     }
 
+    @Override
     public void run() {
-        init();
-
+    	Timer t = new Timer(Timer.DEFAULT_FRAMERATE);
+    	t.setMessage("Graphics Controller");
         while(true) {
-        	try{
-        		draw.render(display);
-        		Thread.sleep(16);
-        	} catch(InterruptedException ex) {
-        		ex.printStackTrace();
-        	}
+        	t.start();
+        	draw.render();
+        	t.end();
         }
     }
 
-    public void init() {
+    public void initDisplay() {
         display = new Display(title, screenWidth, screenHeight);
         display.createDisplay();
     }
