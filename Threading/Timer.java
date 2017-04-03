@@ -6,7 +6,8 @@ public class Timer {
 	private long start_time, end_time, duration;
 	private String message;
 	
-	public static final int DEFAULT_FRAMERATE = 33;
+	private static final int framerate = 30;
+	public static final int DEFAULT_FRAMERATE = (int)(1000 / framerate);
 	
 	public Timer () {
 		this.wait_time_ms = 0;

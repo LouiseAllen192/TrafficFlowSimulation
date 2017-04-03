@@ -56,7 +56,7 @@ public class DrawingComponent implements IDrawingComponent {
         }
 
     	for (Driver d : this.drivers) {
-            this.drawVehicle(d.getDriverVehicle());
+            this.drawVehicle(d.getVehicle());
     	}
     	
     	this.buffer.show();

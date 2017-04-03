@@ -1,17 +1,29 @@
 package Driver;
 
+import SensoryPerception.Sight;
 import Vehicle.Vehicle;
 
 public class SimpleDriverFactory {
-	public Driver createDriver(String type,Vehicle driverVehicle, String name, int age, String sex){
-		Driver d = null;
+	
+	public static enum DriverType {
+		NORMAL,
+		CAUTIOUS,
+		AGRESSIVE
+	};
+	
+	public Driver createDriver(DriverType type, Vehicle _vehicle, Sight _sight){
 		
-		if(type.equals("Aggressive"))
-			d = new AggressiveDriver(driverVehicle, name, age, sex);
-		else if(type.equals("Normal"))
-			d = new NormalDriver(driverVehicle, name, age, sex);
-		else if(type.equals("Cautious"))
-			d = new CautiousDriver(driverVehicle, name, age, sex);
-		return d;
+		// This method should never return NULL
+		switch(type) {
+		case NORMAL:
+			return new NormalDriver(_vehicle, _sight);
+		case CAUTIOUS:
+			return new CautiousDriver(_vehicle, _sight);
+		case AGRESSIVE:
+			return new AggressiveDriver(_vehicle, _sight);
+		default:
+			return new NormalDriver(_vehicle, _sight);
+		}
 	}
+	
 }

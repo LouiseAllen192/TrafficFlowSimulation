@@ -1,8 +1,8 @@
 package Driver;
 
 import java.awt.Color;
+import java.util.HashMap;
 
-import SensoryPerception.Hearing;
 import SensoryPerception.Sight;
 import Vehicle.Vehicle;
 
@@ -10,21 +10,22 @@ public class CautiousDriver extends Driver {
 	
 	private int speedModifier = 1;
 	private double crashChance = 0;
-	
-	public CautiousDriver() {
-		
-	}
 
-	public CautiousDriver(Vehicle driverVehicle, String name, int age, String sex) {
-		super(driverVehicle, name, age, sex);
-		//driverVehicle.setColor(Color.blue); this doesn't do anything at the moment
+	public CautiousDriver(Vehicle _vehicle, Sight _sight) {
+		super(_vehicle, _sight);
 	}
 	
-	public void drive(){
-		//run calls drive
-		boolean carAhead = this.getDriverSight().checkLane(this.driverVehicle.getLane(), this.driverVehicle.getCurrentCell(), this.driverVehicle.getID(), 0, 15);
-		if(carAhead)
+	public void drive() {
+		HashMap<Integer, Integer> roadInfo = this.sight.getRoadInformation(this.vehicle.getCurrentLaneID(), this.vehicle.getCurrentCellID());
+		this.vehicle.accelerate(speedModifier);
+		
+		// Should now know if there is a car ahead, and in which lane.
+		
+		/*
+		boolean carAhead = this.getSight().checkLane(this.getVehicle().getLane(), this.getVehicle().getCurrentCell(), this.getVehicle().getID(), 0, 15);
+		if(carAhead) {
 			crashChance = this.checkAvailableLanes(15, crashChance);
-		this.driverVehicle.accelerate(speedModifier);
+		} this.vehicle.accelerate(speedModifier);
+		*/
 	}
 }

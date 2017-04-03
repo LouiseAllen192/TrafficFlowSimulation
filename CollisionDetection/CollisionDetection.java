@@ -32,7 +32,7 @@ public class CollisionDetection implements I_CollisionDetectionSubject {
         }
     }
     
-    public int checkForCollisions(int vehicleID, int cellID, Lane track){
+    public int checkForCollisions(int vehicleID, int cellID, Lane track) {
 		int cell_count = track.getNumCells();
 		int lowerBound = Math.floorMod((cellID-3), cell_count); //((cellID - 100)%cell_count);
 		int upperBound = (cellID+3) % cell_count;
@@ -49,12 +49,9 @@ public class CollisionDetection implements I_CollisionDetectionSubject {
 				System.out.println("Crash between:"+vehicleID+" + "+otherCarID);
 			}
 			
-			i = (i+1)%cell_count;
+			i = (i + 1) % cell_count;
 		}
 		
-		if(crash)
-			return otherCarID;
-		else
-			return -1;
+		return (crash) ? otherCarID : -1;
 	}
 }

@@ -20,7 +20,7 @@ public class Vehicle implements I_VehicleCollisionObserver {
 		Toyota,Volkswagen,Hyundai,Ford,Nissan,Mazda
 	}
     private int currentCell, vehicleWidth, vehicleHeight, currentLaneId, vehicleId;
-	private double maxSpeed,currentSpeed,angle;
+	private double maxSpeed, currentSpeed, angle;
 	private Lane track;
 	private Road road;
 	private Point position;
@@ -29,7 +29,7 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	private I_VehicleState state;
 	private BufferedImage carImage;
 	
-	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, String imagePath){
+	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, String imagePath) {
 		 this.position = xy;
 		 this.currentCell = cellId;
 		 this.road = road;
@@ -49,7 +49,7 @@ public class Vehicle implements I_VehicleCollisionObserver {
 		return this.carImage;
 	}
 
-	public int getCurrentCellId() {
+	public int getCurrentCellID() {
 	    return this.currentCell;
     }
 	
@@ -62,18 +62,18 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	}
 	
 	public void decellerate(){
-		this.decrementCellId();
+		this.decrementCellID();
 		this.updatePosition(track.getPosition(this.currentCell));
 		this.updateAngle(track.getCarAngle(this.currentCell));
 	}
 	
-	public void incrementCellId(int speedModifier){
+	public void incrementCellID(int speedModifier){
 		int previousCell = this.currentCell;
 		this.currentCell = (this.currentCell + speedModifier) % track.getNumCells();
 		track.occupyCell(previousCell, currentCell, this.vehicleId);
 	}
 	
-	public void decrementCellId(){
+	public void decrementCellID(){
 		this.currentCell = (this.currentCell - 1) % track.getNumCells();
 	}
 	

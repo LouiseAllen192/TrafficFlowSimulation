@@ -20,6 +20,7 @@ public class SimulationController extends Controller {
     private Controller graphics_manager; 
     private Road road;
     private Controller collisionController;
+    private Sight sight;
 
     public SimulationController(SimpleControllerFactory c_fac) {
     	SimpleDriverFactory d_fac = new SimpleDriverFactory();
@@ -32,7 +33,8 @@ public class SimulationController extends Controller {
     	this.screen_height = screenSize.getHeight() / 2;
     	this.center = new Point((int)(this.screen_width / 2), (int)(this.screen_height / 2));
     	this.road = r_fac.createRoad(3, this.center, 50, (int)this.screen_width, (int)this.screen_height);
-
+    	this.sight = new Sight(this.road);
+    	
     	addDriversToRoad(d_fac, v_fac);
 
     	this.collisionController = c_fac.createCollisionDetectionController(drivers);
@@ -40,45 +42,27 @@ public class SimulationController extends Controller {
     }
 
     private void addDriversToRoad(SimpleDriverFactory d_fac, SimpleVehicleFactory v_fac) {
-    	int count = 30;
+    	int count = 10;
     	for (int i = 0; i < count; i++) {
     		Driver d = null;
+    		Vehicle vehicle = null;
     		int start_loc = (1000 / count) * i;
     		switch (i % 3) {
     		case 0:
-        		d = d_fac.createDriver("Aggressive",v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "pink-sports-car.png"), "Rob", 20, "Male");
+    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "pink-sports-car.png");
+        		d = d_fac.createDriver(SimpleDriverFactory.DriverType.AGRESSIVE, vehicle, this.sight);
     			break;
     		case 1:
-    			d = d_fac.createDriver("Normal", v_fac.createVehicle(new Point(30,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "green-sports-car.png"), "Louise", 26, "Female");
+    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "green-sports-car.png");
+    			d = d_fac.createDriver(SimpleDriverFactory.DriverType.NORMAL, vehicle, this.sight);
     			break;
     		case 2:
-    			d = d_fac.createDriver("Cautious", v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "red-sports-car.png"), "Russell", 20, "Male");
+    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "red-sports-car.png");
+    			d = d_fac.createDriver(SimpleDriverFactory.DriverType.CAUTIOUS, vehicle, this.sight);
     			break;
     		}
     		drivers.add(d);
     	}
-    	
-    	/*
-        Driver d1 = d_fac.createDriver("Aggressive",v_fac.createVehicle(new Point(0,0), 0, this.road, 1, 30, 50, 1, "pink-sports-car.png"), "Rob", 20, "Male");
-        Driver d2 = d_fac.createDriver("Normal", v_fac.createVehicle(new Point(30,0), 250, this.road, 1, 30, 50, 2, "green-sports-car.png"), "Louise", 26, "Female");
-        Driver d3 = d_fac.createDriver("Cautious", v_fac.createVehicle(new Point(0,0), 502, this.road, 2, 30, 50, 3, "red-sports-car.png"), "Russell", 20, "Male");
-        Driver d4 = d_fac.createDriver("Aggressive",v_fac.createVehicle(new Point(0,0), 0, this.road, 0, 30, 50, 4, "pink-sports-car.png"), "Rob", 20, "Male");
-        Driver d5 = d_fac.createDriver("Normal", v_fac.createVehicle(new Point(30,0), 800, this.road, 1, 30, 50, 5, "green-sports-car.png"), "Louise", 26, "Female");
-        Driver d6 = d_fac.createDriver("Cautious", v_fac.createVehicle(new Point(0,0), 750, this.road, 1, 30, 50, 6, "red-sports-car.png"), "Russell", 20, "Male");
-        Driver d7 = d_fac.createDriver("Aggressive",v_fac.createVehicle(new Point(0,0), 150, this.road, 2, 30, 50, 7, "pink-sports-car.png"), "Rob", 20, "Male");
-        Driver d8 = d_fac.createDriver("Normal", v_fac.createVehicle(new Point(30,0), 20, this.road, 2, 30, 50, 8, "green-sports-car.png"), "Louise", 26, "Female");
-        Driver d9 = d_fac.createDriver("Cautious", v_fac.createVehicle(new Point(0,0), 500, this.road, 0, 30, 50, 9, "red-sports-car.png"), "Russell", 20, "Male");
-
-        drivers.add(d1);
-        drivers.add(d2);
-        drivers.add(d3);
-        drivers.add(d4);
-        drivers.add(d5);
-        drivers.add(d6);
-        drivers.add(d7);
-        drivers.add(d8);
-        drivers.add(d9);
-        */
     }
     
     public void begin() {

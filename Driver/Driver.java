@@ -7,31 +7,16 @@ import Vehicle.Vehicle;
 
 public class Driver implements Runnable {
 
-	private Hearing driverHearing;
-	private Sight driverSight;
-	private String name;
-	private int age;
-	private String sex;
+	protected Sight sight;
+	protected Vehicle vehicle;
 	protected double speedModifier;
-	protected Vehicle driverVehicle;
 
-	public Driver() {
-		driverHearing = new Hearing();
-		driverSight = new Sight();
-		name = "default";
-		age = 12;
-		sex = "Male";
-		speedModifier = 1;
+	public Driver(Vehicle _vehicle, Sight _sight) {
+		this.sight = _sight;
+		this.vehicle =_vehicle;
 	}
-
-	public Driver(Vehicle driverVehicle, String name, int age, String sex) {
-		this.driverHearing = new Hearing();
-		this.driverSight = new Sight();
-		this.driverVehicle = driverVehicle;
-		this.name = name;
-		this.age = age;
-		this.sex = sex;
-	}
+	
+	/*
 
 	public Hearing getDriverHearing() {
 		return driverHearing;
@@ -80,7 +65,17 @@ public class Driver implements Runnable {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
+	*/
+	
+	public Vehicle getVehicle() {
+		return this.vehicle;
+	}
+	
+	public Sight getSight() {
+		return this.sight;
+	}
 
+	/*
 	public double checkAvailableLanes(int cellsToCheck, double chanceToCrash) {
 		//check what lanes can be moved into after spotting vehicle ahead
 		//chanceToCrash should be a decimal between 0 and 1
@@ -91,10 +86,10 @@ public class Driver implements Runnable {
 			boolean laneToRight = true;
 			boolean leftClear = false;
 			boolean rightClear = false;
-			int currentLane = this.driverVehicle.getCurrentLaneID();
-			int noOfLanes = this.driverVehicle.getRoad().getLanes().size();
-			int currentCell = this.driverVehicle.getCurrentCell();
-			int vehicleID = this.driverVehicle.getID();
+			int currentLane = this.vehicle.getCurrentLaneID();
+			int noOfLanes = this.vehicle.getRoad().getLanes().size();
+			int currentCell = this.vehicle.getCurrentCell();
+			int vehicleID = this.vehicle.getID();
 			
 			if(currentLane == 0)
 				laneToRight = false;
@@ -103,10 +98,10 @@ public class Driver implements Runnable {
 				laneToLeft = false;
 			
 			if(laneToLeft)
-				leftClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane+1), currentCell, vehicleID, cellsToCheck, cellsToCheck));
+				leftClear = !(this.sight.checkLane(this.vehicle.getRoad().getLane(currentLane+1), currentCell, vehicleID, cellsToCheck, cellsToCheck));
 			
 			if(laneToRight)
-				rightClear = !(driverSight.checkLane(driverVehicle.getRoad().getLane(currentLane-1), currentCell, vehicleID, cellsToCheck, cellsToCheck));
+				rightClear = !(this.sight.checkLane(this.vehicle.getRoad().getLane(currentLane-1), currentCell, vehicleID, cellsToCheck, cellsToCheck));
 			
 			if(leftClear && rightClear) {
 				//pick random lane to move into
@@ -116,21 +111,22 @@ public class Driver implements Runnable {
 					leftClear = false;
 			}
 			
-			if(leftClear && rand > chanceToCrash)
-				this.driverVehicle.getState().moveLane(currentLane+1, this.driverVehicle);
-			else if(rightClear && rand > chanceToCrash)
-				this.driverVehicle.getState().moveLane(currentLane-1, this.driverVehicle);
-				
+			if(leftClear && rand > chanceToCrash) {
+				this.vehicle.getState().moveLane(currentLane+1, this.vehicle);
+			} else if(rightClear && rand > chanceToCrash) {
+				this.vehicle.getState().moveLane(currentLane-1, this.vehicle);
+			}
+			
 			return chanceToCrash;
 		}
 		else {
             // System.out.println("OH NO GONNA CRASH");
             return 1;
             //return 1 so that car can't change lanes a second later
-			/*if we didn't change the driver's crashChance, they'd have to fail to check lanes 3 or 4 
-			  times in a row before they actually crash, due to how often this method is called */
+			// if we didn't change the driver's crashChance, they'd have to fail to check lanes 3 or 4 
+			// times in a row before they actually crash, due to how often this method is called
         }
-	}
+	} */
 
 	public void stop() {
 		

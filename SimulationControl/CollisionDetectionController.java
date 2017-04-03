@@ -22,24 +22,24 @@ public class CollisionDetectionController extends Controller {
 	
 	public void registerVehicles() {
 		for(Driver d : drivers)
-			cd.registerObserver(d.getDriverVehicle());
+			cd.registerObserver(d.getVehicle());
 	}
 	
 	@Override
 	public void run() {
-		Timer t = new Timer(Timer.DEFAULT_FRAMERATE);
+		Timer t = new Timer(1);
     	t.setMessage("Collision Detection Controller");
 		while(running) {
 			t.start();
 			for(Driver d : drivers) {
-				if(!(d.getDriverVehicle().isCrashed())) {
-					cd.checkForCollisions(d.getDriverVehicle().getID(),
-							d.getDriverVehicle().getCurrentCell(),
-							d.getDriverVehicle().getLane());
+				if(!(d.getVehicle().isCrashed())) {
+					cd.checkForCollisions(d.getVehicle().getID(),
+							d.getVehicle().getCurrentCell(),
+							d.getVehicle().getLane());
 				}
 			}
 			t.end();
-		}		
+		}
 	}
 	
 	public void stopRunning() {

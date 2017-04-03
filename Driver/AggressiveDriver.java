@@ -1,29 +1,34 @@
 package Driver;
 
 import java.awt.*;
+import java.util.HashMap;
 
 import SensoryPerception.Hearing;
 import SensoryPerception.Sight;
 import Vehicle.Vehicle;
 
-public class AggressiveDriver extends Driver{
+public class AggressiveDriver extends Driver {
 	
 	private int speedModifier = 5;
-	private double crashChance = 0.2;
+	private double crashChance = 0.02;
 	
-	public AggressiveDriver() {
+	public AggressiveDriver(Vehicle _vehicle, Sight _sight) {
+		super(_vehicle, _sight);
+		this.vehicle.setColor(Color.red);
+	}
+	
+	public void drive() {
+		HashMap<Integer, Integer> roadInfo = this.sight.getRoadInformation(this.vehicle.getCurrentLaneID(), this.vehicle.getCurrentCellID());
+		this.vehicle.accelerate(speedModifier);
 		
-	}
-	
-	public AggressiveDriver(Vehicle driverVehicle, String name, int age, String sex) {
-		super(driverVehicle, name, age, sex);
-		driverVehicle.setColor(Color.red);
-	}
-	
-	public void drive(){
-		boolean carAhead = this.getDriverSight().checkLane(this.driverVehicle.getLane(), this.driverVehicle.getCurrentCell(), this.driverVehicle.getID(), 0, 15);
-		if(carAhead)
+		// Should now know if there is a car ahead, and in which lane.
+		
+		/*
+		boolean carAhead = this.sight.checkLane(this.vehicle.getLane(), this.vehicle.getCurrentCell(), this.vehicle.getID(), 0, 15);
+		if(carAhead) {
 			crashChance = this.checkAvailableLanes(10, crashChance);
-		this.driverVehicle.accelerate(speedModifier);
+		}
+		this.vehicle.accelerate(speedModifier);
+		*/
 	}
 }

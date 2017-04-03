@@ -3,6 +3,10 @@ package Road;
 import java.awt.*;
 import java.util.HashMap;
 
+import Threading.DuplicateLockException;
+import Threading.Lock;
+import Threading.UnknownLockException;
+
 public class Lane {
 	private Point center;
 	private int width;
@@ -29,7 +33,15 @@ public class Lane {
 		this.occupiedCells = new HashMap<>();
 		this.ROAD_COLOR = new Color(77, 77, 77);
 		this.laneColor = color;
-	    lock = new Object();
+		try {
+			if (Lock.getInstance().hasLock("lanes")) {
+				this.lock = Lock.getInstance().getLock("lanes");
+			} else {
+				this.lock = Lock.getInstance().createLock("lanes");
+			}
+		} catch(UnknownLockException | DuplicateLockException ex) {
+			System.err.println(ex.getMessage());
+		}
 	}
 
 	public int getX() {
@@ -65,13 +77,13 @@ public class Lane {
 	}
 	
 	public HashMap<Integer, Integer> getOccupiedCells() {
-		synchronized (lock) {
+		synchronized (this.lock) {
 			return occupiedCells;
         }
 	}
 	
 	public void addToOccupiedCells(int cellID, int vehicleID) {
-		synchronized (lock) {
+		synchronized (this.lock) {
 			occupiedCells.put(cellID, vehicleID);
         }
 	}
@@ -102,8 +114,14 @@ public class Lane {
 	}
 
 	public void occupyCell(int previousCell, int cellID, int vehicleID) {
-		addToOccupiedCells(previousCell, -1);
+		removeFromCell(previousCell);
 		addToOccupiedCells(cellID, vehicleID);
+	}
+	
+	public void removeFromCell(int cell) {
+		synchronized(this.lock) {
+			this.occupiedCells.remove(cell);
+		}
 	}
 
 	public void removeVehicle(int cellID) {
