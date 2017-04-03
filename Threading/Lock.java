@@ -4,39 +4,40 @@ import java.util.HashMap;
 
 public class Lock {
 
-	private static Lock lock = new Lock();
 	private HashMap<String, Object> locks;
+	private static Lock lock = new Lock();
 	
 	private Lock() {
-		locks = new HashMap<>();
+		this.locks = new HashMap<>();
+	}
+	
+	public Object createLock(String key) throws DuplicateLockException {
+		if (!hasLock(key)) {
+			this.locks.put(key, new Object());
+			return this.locks.get(key);
+		} else {
+			throw new DuplicateLockException(key);
+		}
 	}
 	
 	public static Lock getInstance() {
 		return lock;
 	}
 	
-	public boolean hasLock(String key) {
-		return (locks.containsKey(key));
-	}
-	
-	public Object createLock(String key) throws DuplicateLockException {
-		if (!hasLock(key)) {
-			locks.put(key, new Object());
-			return locks.get(key);
-		} else {
-			throw new DuplicateLockException(key);
-		}
-	}
-	
-	public void removeLock(String key) {
-		locks.remove(key);
-	}
-	
 	public Object getLock(String key) throws UnknownLockException {
 		if (hasLock(key)) {
-			return locks.get(key);
+			return this.locks.get(key);
 		} else {
 			throw new UnknownLockException(key);
 		}
 	}
+	
+	public boolean hasLock(String key) {
+		return (this.locks.containsKey(key));
+	}
+	
+	public void removeLock(String key) {
+		this.locks.remove(key);
+	}
+	
 }
