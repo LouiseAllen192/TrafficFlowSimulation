@@ -29,14 +29,14 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	private I_VehicleState state;
 	private BufferedImage carImage;
 	
-	public Vehicle(Point xy, int cellId, Road road, int laneId, int vWidth, int vHeight, int id, String imagePath) {
+	public Vehicle(Point xy, int cellId, Road road, int laneId, int numLanes, int id, String imagePath) {
 		 this.position = xy;
 		 this.currentCell = cellId;
 		 this.road = road;
 		 this.currentLaneId = laneId;
 		 this.track = road.getLane(currentLaneId);
-		 this.vehicleWidth = vWidth;
-		 this.vehicleHeight = vHeight;
+		 this.vehicleWidth = getVehicleWidthRelevantToLaneNum(numLanes);
+		 this.vehicleHeight = getVehicleHeightRelevantToLaneNum(numLanes);
 		 this.color = Color.gray;
 		 this.imagePath = imagePath;
 		 this.currentSpeed = 0.0;
@@ -143,6 +143,34 @@ public class Vehicle implements I_VehicleCollisionObserver {
     public int getID(){
     	return vehicleId;
     }
+
+    public int getVehicleWidthRelevantToLaneNum(int numLanes) {
+    	int width;
+		if (numLanes <= 6) {
+			width = 30;
+		} else if (numLanes > 6 && numLanes < 12) {
+			width = 20;
+		} else if (numLanes >= 12  && numLanes < 20) {
+			width = 15;
+		} else {
+			width = 10;
+		}
+		return width;
+	}
+
+	public int getVehicleHeightRelevantToLaneNum(int numLanes) {
+		int height;
+		if (numLanes <= 6) {
+			height = 50;
+		} else if (numLanes > 6 && numLanes < 12) {
+			height = 35;
+		} else if (numLanes >= 12  && numLanes < 20) {
+			height = 25;
+		} else {
+			height = 15;
+		}
+		return height;
+	}
     
     public int getCurrentLaneID() {
     	return this.currentLaneId;

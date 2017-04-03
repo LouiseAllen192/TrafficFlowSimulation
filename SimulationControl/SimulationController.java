@@ -15,6 +15,7 @@ public class SimulationController extends Controller {
 
     private ArrayList<Driver> drivers;
     private final int agressive_drivers = 1;
+    private int numLanes;
     private double screen_width, screen_height;
     private Point center;
     private Controller graphics_manager; 
@@ -31,8 +32,9 @@ public class SimulationController extends Controller {
     	this.drivers = new ArrayList<>();
     	this.screen_width = screenSize.getWidth() / 2;
     	this.screen_height = screenSize.getHeight() / 2;
-    	this.center = new Point((int)(this.screen_width / 2), (int)(this.screen_height / 2));
-    	this.road = r_fac.createRoad(3, this.center, 50, (int)this.screen_width, (int)this.screen_height);
+    	this.numLanes = 14; // max 30
+    	this.center = new Point((int)(this.screen_width), (int)(this.screen_height));
+    	this.road = r_fac.createRoad(this.numLanes, this.center, screen_width, screen_height);
     	this.sight = new Sight(this.road);
     	
     	addDriversToRoad(d_fac, v_fac);
@@ -42,22 +44,22 @@ public class SimulationController extends Controller {
     }
 
     private void addDriversToRoad(SimpleDriverFactory d_fac, SimpleVehicleFactory v_fac) {
-    	int count = 10;
+    	int count = 200;
     	for (int i = 0; i < count; i++) {
     		Driver d = null;
     		Vehicle vehicle = null;
     		int start_loc = (1000 / count) * i;
     		switch (i % 3) {
     		case 0:
-    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "pink-sports-car.png");
+    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), this.numLanes, i, "pink-sports-car.png");
         		d = d_fac.createDriver(SimpleDriverFactory.DriverType.AGRESSIVE, vehicle, this.sight);
     			break;
     		case 1:
-    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "green-sports-car.png");
+    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), this.numLanes, i, "green-sports-car.png");
     			d = d_fac.createDriver(SimpleDriverFactory.DriverType.NORMAL, vehicle, this.sight);
     			break;
     		case 2:
-    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), 30, 50, i, "red-sports-car.png");
+    			vehicle = v_fac.createVehicle(new Point(0,0), start_loc, this.road, this.road.getRandomLane(), this.numLanes,  i, "red-sports-car.png");
     			d = d_fac.createDriver(SimpleDriverFactory.DriverType.CAUTIOUS, vehicle, this.sight);
     			break;
     		}
