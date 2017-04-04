@@ -29,6 +29,9 @@ public class Vehicle implements I_VehicleCollisionObserver {
 	private I_VehicleState state;
 	private BufferedImage carImage;
 	
+	public Vehicle(){
+		
+	}
 	public Vehicle(Point xy, int cellId, Road road, int laneId, int numLanes, int id, String imagePath) {
 		 this.position = xy;
 		 this.currentCell = cellId;
