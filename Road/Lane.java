@@ -77,9 +77,7 @@ public class Lane {
 	}
 	
 	public HashMap<Integer, Integer> getOccupiedCells() {
-		synchronized (this.lock) {
-			return occupiedCells;
-        }
+		return occupiedCells;
 	}
 	
 	public void addToOccupiedCells(int cellID, int vehicleID) {
@@ -132,19 +130,21 @@ public class Lane {
 		HashMap<Integer, Integer> occCells = getOccupiedCells();
 		boolean occupied = true;
 		while (occupied) {
-			if (occCells.get(cellID) == null || occCells.get(cellID) != -1) {
+			if (occCells.get(cellID) == null || occCells.get(cellID) == -1) {
 				addToOccupiedCells(cellID, vehicleID);
 				occupied = false;
 			} else
-				cellID = Math.floorMod((cellID + 1), cell_count);
+				cellID = (cellID + 1) % cell_count;
 		}
 	}
 
 	public int getCarAtCell(int key) {
-		HashMap<Integer, Integer> occCells = getOccupiedCells();
-		  if ((occCells.containsKey(key)) && (occCells.get(key) != null)) {
-			if (occCells.get(key) != -1 && occCells.get(key) != 0) {
-				return occCells.get(key);
+		synchronized(this.lock) {
+			HashMap<Integer, Integer> occCells = getOccupiedCells();
+			  if ((occCells.containsKey(key)) && (occCells.get(key) != null)) {
+				if (occCells.get(key) != -1) {
+					return occCells.get(key);
+				}
 			}
 		}
 		return -1;
