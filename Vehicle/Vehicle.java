@@ -95,6 +95,10 @@ public class Vehicle implements I_VehicleCollisionObserver {
         }
 	}
 	
+	public void changeLane(int laneID) {
+		state.changeLane(laneID, this);		
+	}
+	
 	public Point getPosition(){
 		return position;
 	}

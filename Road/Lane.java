@@ -121,11 +121,7 @@ public class Lane {
 			this.occupiedCells.remove(cell);
 		}
 	}
-
-	public void removeVehicle(int cellID) {
-		addToOccupiedCells(cellID, -1);
-	}
-
+	
 	public void addCar(int cellID, int vehicleID) {
 		HashMap<Integer, Integer> occCells = getOccupiedCells();
 		boolean occupied = true;

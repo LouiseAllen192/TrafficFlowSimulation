@@ -22,7 +22,7 @@ public class Sight {
 		this.lanes = road.getLanes();
 	}
 	
-	public HashMap<Integer, Integer> getRoadInformation(int lane, int cell) {
+	public HashMap<Integer, Integer> getRoadInformation(int lane, int cell, int vehicleID) {
 		HashMap <Integer, Integer> roadInfo = new HashMap<>();
 		try {
 			if (Lock.getInstance().hasLock("lanes")) {
@@ -31,13 +31,15 @@ public class Sight {
 					Lane l;
 					int lim = cell + 100;
 					for (int i = 0; i < this.lanes.size(); i++) {
-						roadInfo.put(i, -1);
+						roadInfo.put(i, -100);
 						l = this.lanes.get(i);
 						HashMap<Integer, Integer> oc = l.getOccupiedCells();
-						for (int j = cell + 1; j < lim; j++) {
-							if (oc.containsKey(j % 1000)) {
-								roadInfo.put(i, 100 - (lim - j));
-								break;
+						for (int j = (cell-50); j < lim; j++) {
+							if (oc.containsKey(Math.floorMod(j, 1000))) {
+								if(oc.get(Math.floorMod(j, 1000)) != vehicleID && (i != lane || (100 - (lim - j)) > 0)) { //we don't care what's behind us in our currentLane
+									roadInfo.put(i, 100 - (lim - j));
+									break;
+								}
 							}
 						}
 					}

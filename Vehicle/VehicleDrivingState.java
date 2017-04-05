@@ -12,10 +12,13 @@ public class VehicleDrivingState implements I_VehicleState{
 
     public VehicleStatesEnum getState() {
         return VehicleStatesEnum.DRIVING;
-    }
+    }           
     
-    public void moveLane(int laneID, Vehicle v) {
-		v.getLane().removeVehicle(v.getCurrentCell());
+    public void changeLane(int laneID, Vehicle v) {
+    	v.getLane().removeFromCell(v.getCurrentCell());
 		v.setLane(laneID);
+		v.updatePosition(v.getLane().getPosition(v.getCurrentCell()));
+		v.getLane().addToOccupiedCells(v.getCurrentCell(), v.getID());
+		//System.out.println("Vehicle "+v.getID()+" changed to lane "+laneID);
 	}
 }

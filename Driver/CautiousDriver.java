@@ -16,16 +16,12 @@ public class CautiousDriver extends Driver {
 	}
 	
 	public void drive() {
-		HashMap<Integer, Integer> roadInfo = this.sight.getRoadInformation(this.vehicle.getCurrentLaneID(), this.vehicle.getCurrentCellID());
-		this.vehicle.accelerate(speedModifier);
+		int currentLaneNo = this.vehicle.getCurrentLaneID();
+		HashMap<Integer, Integer> roadInfo = this.sight.getRoadInformation(currentLaneNo, this.vehicle.getCurrentCellID(), this.vehicle.getID());
+		int currentLaneStatus = roadInfo.get(currentLaneNo);
 		
-		// Should now know if there is a car ahead, and in which lane.
-		
-		/*
-		boolean carAhead = this.getSight().checkLane(this.getVehicle().getLane(), this.getVehicle().getCurrentCell(), this.getVehicle().getID(), 0, 15);
-		if(carAhead) {
-			crashChance = this.checkAvailableLanes(15, crashChance);
-		} this.vehicle.accelerate(speedModifier);
-		*/
+		if(currentLaneStatus > 70 || currentLaneStatus == -100)// || crashChance == 1)
+			this.vehicle.accelerate(speedModifier);
+		//else stop - cautious drivers are too afraid to overtake
 	}
 }

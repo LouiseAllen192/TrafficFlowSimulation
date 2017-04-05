@@ -32,7 +32,7 @@ public class SimulationController extends Controller {
     	this.drivers = new ArrayList<>();
     	this.screen_width = screenSize.getWidth() / 2;
     	this.screen_height = screenSize.getHeight() / 2;
-    	this.numLanes = 14; // max 30
+    	this.numLanes = 3; // max 30
     	this.center = new Point((int)(this.screen_width), (int)(this.screen_height));
     	this.road = r_fac.createRoad(this.numLanes, this.center, screen_width, screen_height);
     	this.sight = new Sight(this.road);
@@ -44,7 +44,7 @@ public class SimulationController extends Controller {
     }
 
     private void addDriversToRoad(SimpleDriverFactory d_fac, SimpleVehicleFactory v_fac) {
-    	int count = 200;
+    	int count = 12;
     	for (int i = 0; i < count; i++) {
     		Driver d = null;
     		Vehicle vehicle = null;

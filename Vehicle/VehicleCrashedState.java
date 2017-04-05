@@ -12,7 +12,7 @@ public class VehicleCrashedState implements I_VehicleState {
         return VehicleStatesEnum.CRASHED;
     }
     
-    public void moveLane(int laneID, Vehicle v) {
-        //Will not move lane when Crashed
+    public void changeLane(int laneID, Vehicle v) {
+        //Will not change lane when Crashed
 	}
 }
