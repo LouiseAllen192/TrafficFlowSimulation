@@ -9,7 +9,6 @@ import Vehicle.Vehicle;
 public class CautiousDriver extends Driver {
 	
 	private int speedModifier = 1;
-	private double crashChance = 0;
 
 	public CautiousDriver(Vehicle _vehicle, Sight _sight) {
 		super(_vehicle, _sight);
@@ -20,7 +19,7 @@ public class CautiousDriver extends Driver {
 		HashMap<Integer, Integer> roadInfo = this.sight.getRoadInformation(currentLaneNo, this.vehicle.getCurrentCellID(), this.vehicle.getID());
 		int currentLaneStatus = roadInfo.get(currentLaneNo);
 		
-		if(currentLaneStatus > 70 || currentLaneStatus == -100)// || crashChance == 1)
+		if(currentLaneStatus > 85 || currentLaneStatus == -100)
 			this.vehicle.accelerate(speedModifier);
 		//else stop - cautious drivers are too afraid to overtake
 	}
