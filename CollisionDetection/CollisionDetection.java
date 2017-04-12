@@ -33,9 +33,8 @@ public class CollisionDetection implements I_CollisionDetectionSubject {
     
     public int checkForCollisions(int vehicleID, int cellID, Lane track) {
 		int cell_count = track.getNumCells();
-		int lowerBound = Math.floorMod((cellID), cell_count); //((cellID - 100)%cell_count);
 		int upperBound = (cellID+30) % cell_count;
-		int i = lowerBound;
+		int i = cellID;
 		int otherCarID = -1;
 		boolean crash = false;
 		
@@ -45,7 +44,6 @@ public class CollisionDetection implements I_CollisionDetectionSubject {
 			if((otherCarID != -1) && (otherCarID != vehicleID)) {
 				crash = true;
 				this.notifyObservers(vehicleID, otherCarID);
-				System.out.println("Crash between:"+vehicleID+" + "+otherCarID);
 			}
 			
 			i = (i + 1) % cell_count;

@@ -3,7 +3,6 @@ package Driver;
 import java.awt.*;
 import java.util.HashMap;
 
-import SensoryPerception.Hearing;
 import SensoryPerception.Sight;
 import Vehicle.Vehicle;
 
@@ -43,12 +42,10 @@ public class AggressiveDriver extends Driver {
 			}
 			
 			if(rightClear && leftClear) {
-				if(rand < 0.5) {
+				if(rand < 0.5)
 					this.vehicle.changeLane(currentLaneNo-1);
-				}
-				else {
+				else
 					this.vehicle.changeLane(currentLaneNo+1);
-				}
 			}
 			else if(rightClear) {
 				this.vehicle.changeLane(currentLaneNo-1);

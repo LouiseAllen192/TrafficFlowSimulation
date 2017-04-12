@@ -32,11 +32,9 @@ public class CollisionDetectionController extends Controller {
 		while(running) {
 			t.start();
 			for(Driver d : drivers) {
-				if(!(d.getVehicle().isCrashed())) {
-					cd.checkForCollisions(d.getVehicle().getID(),
-							d.getVehicle().getCurrentCell(),
-							d.getVehicle().getLane());
-				}
+				cd.checkForCollisions(d.getVehicle().getID(),
+						d.getVehicle().getCurrentCell(),
+						d.getVehicle().getLane());
 			}
 			t.end();
 		}
