@@ -67,15 +67,11 @@ public class Road {
     }
 
     private void addLanes(int numLanes, SimpleLaneFactory laneFactory) {
-        int laneOffset = laneWidth / 2;
-
         int currentWidth = screenWidth;
         int currentHeight = screenHeight;
 
         int currentX = (int) center.getX();
         int currentY = (int) center.getY();
-
-        //To be removed after - just hear for clarity to see lanes more clearly
 
         ArrayList<Color> c = new ArrayList<>();
         c.add(new Color(144, 150, 160));

@@ -6,6 +6,7 @@ import Driver.Driver;
 import GraphicsManager.Display;
 import GraphicsManager.DrawingComponent;
 import GraphicsManager.IDisplay;
+import GraphicsManager.IDrawingComponent;
 import Road.Road;
 import Threading.Timer;
 
@@ -13,7 +14,7 @@ public class GraphicsController extends Controller {
 
     private String title;
     private double screenWidth, screenHeight;
-    public DrawingComponent draw;
+    public IDrawingComponent draw;
 
     //private Thread thread;
     private IDisplay display;

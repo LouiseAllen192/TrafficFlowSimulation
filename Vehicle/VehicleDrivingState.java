@@ -19,6 +19,5 @@ public class VehicleDrivingState implements I_VehicleState{
 		v.setLane(laneID);
 		v.updatePosition(v.getLane().getPosition(v.getCurrentCell()));
 		v.getLane().addToOccupiedCells(v.getCurrentCell(), v.getID());
-		//System.out.println("Vehicle "+v.getID()+" changed to lane "+laneID);
 	}
 }
