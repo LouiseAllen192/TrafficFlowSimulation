@@ -24,7 +24,7 @@ public class Timer {
 	public void end() {
 		this.end_time = System.nanoTime();
 		this.duration = (this.end_time - this.start_time) / 1000000;
-		// this.print_message();
+		this.print_message();
 		this.sleep();
 	}
 	
