@@ -137,13 +137,9 @@ public class Lane {
 	public int getCarAtCell(int key) {
 		synchronized(this.lock) {
 			HashMap<Integer, Integer> occCells = getOccupiedCells();
-			  if ((occCells.containsKey(key)) && (occCells.get(key) != null)) {
-				if (occCells.get(key) != -1) {
-					return occCells.get(key);
-				}
-			}
+			Integer val = occCells.get(key);
+			return (val != null) ? val : -1;
 		}
-		return -1;
 	}
 
 	public void occupiedCellsSize() {
